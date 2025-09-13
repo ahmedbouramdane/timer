@@ -1,0 +1,44 @@
+.time-show {
+    display: flex;
+    justify-content: center;
+    font-family: 'Digital7', sans-serif;
+    font-size: 12rem;
+}
+
+@font-face {
+    font-family: 'Digital7';
+    src: url('../fonts/digital-7/digital-7.ttf') format('truetype');
+}
+
+/* media query for small devices */
+@media (max-width: 576px) {
+    .time-show {
+        font-size: 8rem;
+    }
+    .navbar .navbar-brand .align-middle {
+        font-size: 0.8rem;
+    }
+    footer .text-muted {
+        font-size: 0.8rem;
+    }
+    #classroom {
+        font-size: 0.8rem;
+    }
+    /* login */
+    .login-form {
+        padding: 1rem;
+    }
+    .login-form .form-control {
+        font-size: 1rem;
+    }
+    .login-form .btn {
+        font-size: 1rem;
+    }
+    .high-school-logo {
+        height: 70px;
+    }
+    .high-school-logo img {
+        height: 100%;
+    }
+    
+}
