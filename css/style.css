@@ -5,6 +5,10 @@
     font-size: 12rem;
 }
 
+.high-school-logo {
+    height: 85px !important;
+}
+
 @font-face {
     font-family: 'Digital7';
     src: url('../fonts/digital-7/digital-7.ttf') format('truetype');
@@ -41,4 +45,20 @@
         height: 100%;
     }
     
+    footer span {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .timer-container {
+        button {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.6rem;
+            height: fit-content;
+        }
+    }
+
+    .time-show {
+        font-size: 6rem;
+    }
 }
