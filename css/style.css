@@ -84,3 +84,9 @@
         transform: scale(1);
     }
 }
+
+/* force style for disabled buttons */
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

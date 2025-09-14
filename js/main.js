@@ -81,6 +81,8 @@ let totalSeconds = 0;
 let isPaused = false;
 let remainingSeconds = 0;
 let begin = true;
+// time pattern regex with empty time: 00:00:00
+let pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/; // regex for HH:MM:SS 24-hour format
 
 function updateTimeDisplay(seconds) {
     const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
@@ -90,7 +92,6 @@ function updateTimeDisplay(seconds) {
 }
 
 startBtn.addEventListener('click', () => {
-    let pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/; // regex for HH:MM:SS 24-hour format
     if (!pattern.test(document.getElementById('time-flatpickr').value) || document.getElementById('time-flatpickr').value === "00:00:00") {
         // show bootstrap toast for invalid time format automatically
         let toastEl = document.querySelector('#invalidTimeToast .toast');
@@ -141,9 +142,9 @@ resetBtn.addEventListener('click', () => {
     pauseBtn.disabled = true;
     resetBtn.disabled = true;
 });
-timePicker.addEventListener('change', (e) => {
-    
-    const timeParts = e.target.value.split(':');
+
+function updateTime() {
+    const timeParts = document.getElementById('time-flatpickr').value.split(':');
     if (timeParts.length === 3) {
         const hours = parseInt(timeParts[0], 10) || 0;
         const minutes = parseInt(timeParts[1], 10) || 0;
@@ -151,10 +152,10 @@ timePicker.addEventListener('change', (e) => {
         totalSeconds = hours * 3600 + minutes * 60 + seconds;
         updateTimeDisplay(totalSeconds);
     }
+}
+document.getElementById('time-flatpickr').addEventListener('input', () => {
+    updateTime();
 });
-
-updateTimeDisplay(totalSeconds);
-
 
 // show the bs model that in the timer pug file automatically when the time is up and play sound
 function showModal() {
@@ -186,6 +187,8 @@ setInterval(() => {
                 startBtn.disabled = false;
                 pauseBtn.disabled = true;
                 resetBtn.disabled = true;
+
+                updateTime();
         });
     }); 
 
