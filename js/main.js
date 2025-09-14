@@ -7,13 +7,13 @@ window.addEventListener('click', () => {
     const windowHeight = window.innerHeight;
     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 });
-/* window.addEventListener('click', () => {
+window.addEventListener('click', () => {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch((err) => {
             console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
     }
-}); */
+});
 
 let container = document.getElementById("container"),
     nav = document.getElementsByTagName('nav')[0],
