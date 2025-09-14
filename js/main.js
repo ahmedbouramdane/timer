@@ -7,13 +7,13 @@ window.addEventListener('click', () => {
     const windowHeight = window.innerHeight;
     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 });
-window.addEventListener('click', () => {
+/* window.addEventListener('click', () => {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch((err) => {
             console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
     }
-});
+}); */
 
 let container = document.getElementById("container"),
     nav = document.getElementsByTagName('nav')[0],
@@ -80,7 +80,7 @@ let interval;
 let totalSeconds = 0;
 let isPaused = false;
 let remainingSeconds = 0;
-let begin = false;
+let begin = true;
 
 function updateTimeDisplay(seconds) {
     const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
@@ -90,7 +90,19 @@ function updateTimeDisplay(seconds) {
 }
 
 startBtn.addEventListener('click', () => {
-    begin = true;
+    let pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/; // regex for HH:MM:SS 24-hour format
+    if (!pattern.test(document.getElementById('time-flatpickr').value) || document.getElementById('time-flatpickr').value === "00:00:00") {
+        // show bootstrap toast for invalid time format automatically
+        let toastEl = document.querySelector('#invalidTimeToast .toast');
+        let toast = new bootstrap.Toast(toastEl);
+        toast.show();
+        document.getElementById('time-flatpickr').value = "00:00:00"; // Reset to default value
+        return; // Stop processing if input is invalid
+    }
+    begin = false;
+    pauseBtn.disabled = false;
+    startBtn.disabled = true;
+    isPaused = false;
     if (isPaused) {
         startBtn.innerHTML = 'Start';
         totalSeconds = remainingSeconds;
@@ -110,18 +122,27 @@ pauseBtn.addEventListener('click', () => {
     isPaused = true;
     remainingSeconds = totalSeconds;
     startBtn.innerHTML = 'Resume';
+    startBtn.disabled = false;
+    resetBtn.disabled = false;
+    pauseBtn.disabled = true;
 });
 resetBtn.addEventListener('click', () => {
-    begin = false;
+    begin = true;
     startBtn.innerHTML = 'Start';
     clearInterval(interval);
     isPaused = false;
     totalSeconds = 0;
     remainingSeconds = 0;
     updateTimeDisplay(totalSeconds);
-    timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
+    if (timePicker._flatpickr) {
+        timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
+    }
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = true;
 });
 timePicker.addEventListener('change', (e) => {
+    
     const timeParts = e.target.value.split(':');
     if (timeParts.length === 3) {
         const hours = parseInt(timeParts[0], 10) || 0;
@@ -140,11 +161,10 @@ function showModal() {
     const myModal = new bootstrap.Modal(document.getElementById('timeUpModal'), {});
     myModal.show();
     document.getElementById('alarm-audio').play();
-    begin = true;
 
 }
 setInterval(() => {
-    if (totalSeconds === 0 && !isPaused && begin) {
+    if (totalSeconds === 0 && !isPaused && !begin) {
         showModal();
         isPaused = true; // To prevent multiple modal pop-ups
     } 
@@ -153,6 +173,19 @@ setInterval(() => {
         el.addEventListener('click', () => {
             document.getElementById('alarm-audio').pause();
             document.getElementById('alarm-audio').currentTime = 0;
+                begin = true;
+                startBtn.innerHTML = 'Start';
+                clearInterval(interval);
+                isPaused = false;
+                totalSeconds = 0;
+                remainingSeconds = 0;
+                updateTimeDisplay(totalSeconds);
+                if (timePicker._flatpickr) {
+                    timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
+                }
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                resetBtn.disabled = true;
         });
     }); 
 
@@ -166,17 +199,17 @@ setInterval(() => {
 // media query and replace bootstrap classes
 function applyResponsiveDesign() {
     if (window.innerWidth < 576) { // Bootstrap's sm breakpoint
-        startBtn.classList.remove('btn-lg', 'me-3');    
+        startBtn.classList.remove('btn-lg');    
         startBtn.classList.add('btn-md', 'mb-2', 'w-100');
-        pauseBtn.classList.remove('btn-lg', 'me-3');
+        pauseBtn.classList.remove('btn-lg');
         pauseBtn.classList.add('btn-md', 'mb-2', 'w-100');
         resetBtn.classList.remove('btn-lg');
         resetBtn.classList.add('btn-md', 'w-100', 'mb-2');
     } else {
         startBtn.classList.remove('btn-md', 'mb-2', 'w-100');
-        startBtn.classList.add('btn-lg', 'me-3');
+        startBtn.classList.add('btn-lg');
         pauseBtn.classList.remove('btn-md', 'mb-2', 'w-100');
-        pauseBtn.classList.add('btn-lg', 'me-3');
+        pauseBtn.classList.add('btn-lg');
         resetBtn.classList.remove('btn-md', 'w-100', 'mb-2');
         resetBtn.classList.add('btn-lg');       
     } 
@@ -238,13 +271,3 @@ window.addEventListener('resize', applyResponsiveDesign);
 window.addEventListener('load', applyResponsiveDesign);
 
 //****************** */ End - Responsive Design ************************* 
-
-// flatpickr settings in android and mobile screen also
-flatpickr("#time-flatpickr", {
-    enableTime: true,
-    enableSeconds: true,
-    noCalendar: true,
-    dateFormat: "H:i:S",
-    time_24hr: true,
-    defaultDate: "00:00:00"
-});

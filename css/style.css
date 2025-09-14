@@ -39,14 +39,14 @@
         font-size: 1rem;
     }
     .high-school-logo {
-        height: 70px;
+        height: 50px !important;
     }
     .high-school-logo img {
         height: 100%;
     }
     
     footer span {
-        font-size: 0.7rem;
+        font-size: 1rem;
         text-align: center;
     }
 
@@ -60,5 +60,27 @@
 
     .time-show {
         font-size: 6rem;
+    }
+
+    /* change modal title on small devices - about - contact */
+    #aboutModal .modal-title, #contactModal .modal-title {
+        font-size: 1rem;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.time-up-img {
+    animation: pulse 2s infinite alternate;
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }

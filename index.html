@@ -45,7 +45,7 @@
             <label class="form-label w-50 fw-bold" for="time-flatpickr">Set Timer:</label>
             <input class="form-control" id="time-flatpickr" type="text" placeholder="Select Time" readonly>
           </div>
-          <div class="btn-group ms-3">
+          <div class="btn-group" role="group" aria-label="Timer Controls">
             <button class="btn btn-success btn-lg" id="start-btn" type="button">Start</button>
             <button class="btn btn-warning btn-lg" id="pause-btn" type="button" disabled>Pause</button>
             <button class="btn btn-danger btn-lg mb-2" id="reset-btn" type="button" disabled>Reset</button>
@@ -62,10 +62,10 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="timeUpModalLabel">Time's Up!</h5>
+                <h5 class="modal-title text-danger" id="timeUpModalLabel">Time's Up!</h5>
                 <button class="btn-close btn-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="Time's Up">
+              <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto time-up-img" src="./imgs/icon.png" alt="Time's Up">
                 <div class="text-center">The countdown has finished.</div>
               </div>
               <div class="modal-footer">
@@ -100,24 +100,34 @@
             </div>
             <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="Contact Us">
               <!-- make the link icons large and organized-->
-              <p class="text-muted">You can reach us through the following social media platforms:</p>
-              <ul class="d-flex justify-content-center gap-3 list-unstyled">
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://www.facebook.com/hmad.bwrmdan" target="_blank"><i class="fab fa-facebook-square"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://www.linkedin.com/in/ahmed-bouramdane-b1676b306/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://www.instagram.com/ahmed.bouramdane77/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://github.com/ahmedbouramdane" target="_blank"><i class="fab fa-github"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="mailto:ahmedbourmdane77@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
-                <li class="list-inline-item"><a class="me-2 fs-2" href="https://wa.me/0633977491" target="_blank"><i class="fab fa-whatsapp-square"></i></a></li>
+              <p class="text-muted text-center">You can reach us through the following social media platforms:</p>
+              <ul class="row list-unstyled justify-content-center gap-3">
+                <li class="col-lg-1 col-2"> <a class="me-2 fs-2" href="https://www.facebook.com/hmad.bwrmdan" target="_blank"><i class="fab fa-facebook-square"></i></a></li>
+                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a></li>
+                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.linkedin.com/in/ahmed-bouramdane-b1676b306/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.instagram.com/ahmed.bouramdane77/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li class="col-lg-1 col-2">  <a class="me-2 fs-2" href="https://github.com/ahmedbouramdane" target="_blank"><i class="fab fa-github"></i></a></li>
+                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="mailto:ahmedbourmdane77@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://wa.me/0633977491" target="_blank"><i class="fab fa-whatsapp-square"></i></a></li>
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1100;" id="invalidTimeToast">
+        <div class="toast bg-danger mt-4" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+          <div class="toast-header"><strong class="me-auto text-danger"><b>Notification:</b> <span class="text-muted">Invalid Time Format</span></strong><small class="text-muted">Just now</small>
+            <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body bg-danger text-white">Please enter a valid time greater than 00:00:00.</div>
         </div>
       </div>
     </main>
     <footer class="d-flex justify-content-evenly bg-primary p-2 text-light fs-4"><span>&copy; 2025 All right reserved </span><span>Developed by <i>Ahmed Bouramdane</i></span><span>Lydex de Rabat</span></footer>
     <script src="./js/flatpickr.js"> </script>
     <script>
+      // initialize flatpickr for time input field with seconds and 24-hour format in large screens
+      if (window.innerWidth >= 576) { // Bootstrap's sm breakpoint
       flatpickr("#time-flatpickr", {
           enableTime: true,      // enable time picker
           enableSeconds: true,   // show seconds in tooltip
@@ -126,6 +136,14 @@
           time_24hr: true,        // remove AM/PM
           defaultDate: "00:00:00" 
       });
+      } else {
+          // For small screens, use a simple text input without flatpickr
+          const timeInput = document.getElementById('time-flatpickr');
+          timeInput.type = 'text'; // Change to simple text input
+          timeInput.placeholder = 'Enter time as HH:MM:SS'; // Update placeholder
+          timeInput.value = ''; // Clear any existing value
+          timeInput.readOnly = false; // Make it editable
+      }
     </script>
     <script src="./js/all.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
