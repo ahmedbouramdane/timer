@@ -6,7 +6,7 @@
     <title>Timer - Ahmed Bouramdane</title>
     <link rel="stylesheet" href="./css/flatpickr.min.css">
     <link rel="stylesheet" href="./css/all.min.css">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" id="bootstrap">
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
@@ -16,9 +16,10 @@
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav me-auto mt-2 mt-lg-0 justify-content-center w-100 gap-5">
-            <li class="nav-item"><a class="nav-link active" href="#">Home </a></li>
-            <li class="nav-item"><a class="nav-link active" href="#aboutModal" data-bs-toggle="modal">About us</a></li>
-            <li class="nav-item"><a class="nav-link active" href="#contactModal" data-bs-toggle="modal">Contact us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#"> <i class="fas fa-home me-2"></i>Home </a></li>
+            <li class="nav-item"><a class="nav-link active" href="#aboutModal" data-bs-toggle="modal"> <i class="fas fa-info me-2"></i>About us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#contactModal" data-bs-toggle="modal"> <i class="fas fa-envelope me-2"></i>Contact us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#settingsModal" data-bs-toggle="modal"> <i class="fas fa-cog me-2"></i>Settings</a></li>
           </ul>
         </div>
       </div>
@@ -55,9 +56,7 @@
         <div class="time-show display-1"><span id="hours">00</span><span>:</span><span id="minutes">00</span><span>:</span><span id="seconds">00</span></div>
         <hr>
         <h3 class="classroom text-center mt-4 mb-0" id="classroom">1<sup>ère</sup> année BAC Science Math/Exp</h3>
-        <audio id="alarm-audio">
-          <source src="./audio/alarm.mp3" type="audio/mpeg">
-        </audio>
+        <audio id="alarm-audio" src="./audio/alarm3.mp3" type="audio/mpeg"></audio>
         <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -122,6 +121,49 @@
           <div class="toast-body bg-danger text-white">Please enter a valid time greater than 00:00:00.</div>
         </div>
       </div>
+      <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="settingsModalLabel"><i class="fas fa-cog"></i> Settings</h5>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h4 class="text-muted text-center mb-3">Settings</h4>
+              <form>
+                <div class="mb-3">
+                  <label class="form-label" for="themeSelect">Select Theme:</label>
+                  <select class="form-select" id="themeSelect">
+                    <option value="light" selected>Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="auto">Auto (Based on system settings)</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="fontSizeSelect">Select Font Size:</label>
+                  <select class="form-select" id="fontSizeSelect">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="soundSelect">Select Alarm Sound:</label>
+                  <select class="form-select" id="soundSelect">
+                    <option value="./audio/alarm1.mp3" selected>Default Alarm</option>
+                    <option value="./audio/alarm2.mp3">City alert siren loop </option>
+                    <option value="./audio/alarm3.mp3">Police Operation Siren</option>
+                  </select>
+                </div>
+                <div class="form-check form-switch mb-3">
+                  <input class="form-check-input" type="checkbox" id="fullscreenToggle">
+                  <label class="form-check-label" for="fullscreenToggle">Enable Fullscreen Mode on Start</label>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <footer class="d-flex justify-content-evenly bg-primary p-2 text-light fs-4"><span>&copy; 2025 All right reserved </span><span>Developed by <i>Ahmed Bouramdane</i></span><span>Lydex de Rabat</span></footer>
     <script src="./js/flatpickr.js"> </script>
@@ -148,5 +190,6 @@
     <script src="./js/all.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/settings.js"></script>
   </body>
 </html>

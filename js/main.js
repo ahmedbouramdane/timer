@@ -15,6 +15,8 @@ window.addEventListener('click', () => {
     }
 });
 
+
+
 let container = document.getElementById("container"),
     nav = document.getElementsByTagName('nav')[0],
     footer = document.getElementsByTagName('footer')[0];
@@ -161,6 +163,10 @@ document.getElementById('time-flatpickr').addEventListener('input', () => {
 function showModal() {
     const myModal = new bootstrap.Modal(document.getElementById('timeUpModal'), {});
     myModal.show();
+    // set alarm sound source from local storage or default sound
+    let alarmAudio = document.getElementById('alarm-audio');
+    let selectedSound = localStorage.getItem('selectedSound') || 'alarm1.mp3';
+    alarmAudio.src = `${selectedSound}`;
     document.getElementById('alarm-audio').play();
 
 }
@@ -247,11 +253,6 @@ function applyResponsiveDesign() {
         navBar.classList.add('gap-5');        
     }
 
-    // add font awsome icons to the nav links
-    const navLinks = document.querySelectorAll('nav .nav-link');
-    navLinks[0].innerHTML = `<i class="fas fa-home me-2"></i> Home`;
-    navLinks[1].innerHTML = `<i class="fas fa-info me-2"></i> About us`;
-    navLinks[2].innerHTML = `<i class="fas fa-envelope me-2"></i> Contact us`;
 
     // .set-time flex to column on small screens
     const setTimeDiv = document.querySelector('.set-time');

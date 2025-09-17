@@ -35,7 +35,7 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - Font Awesome (for icons)
 
 ## github pages direct link
-https://ahmedbouramdane.github.io/school-timer/
+https://ahmedbouramdane.github.io/timer/
 
 
 ## Version
