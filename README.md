@@ -22,6 +22,8 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - Customizable time input
 - Responsive design
 - Sound notification when time is up
+- Settings control (songs, theme, screen...)
+- etc...
 
 ## Technologies used
 - HTML
@@ -40,3 +42,6 @@ https://ahmedbouramdane.github.io/timer/
 
 ## Version
 - first version (1.0.0) date Saturday 13th September 2025
+
+## News
+- v6(Thu 25/09/2025): Settings updates, theme, add other alarm song

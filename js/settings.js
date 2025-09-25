@@ -9,16 +9,38 @@ document.getElementById('soundSelect').addEventListener('change', function() {
     
 });
 
+function darkTheme(dark=false) {
+    if (dark) {
+        let container = document.getElementById('container');
+        let style = document.getElementById('bootstrap');
+        style.setAttribute('href', './css/bootstrap-bootswatch.min.css')
+        container.classList.remove('bg-white')
+        container.classList.add('bg-dark')
+        console.log(container);
+        localStorage.setItem('theme', 'dark');
+    }
+
+    else {
+        let style = document.getElementById('bootstrap');
+        style.setAttribute('href', './css/bootstrap.min.css');
+        container.classList.remove('bg-dark')
+        container.classList.add('bg-white')
+        localStorage.setItem('theme', 'light');
+
+    }
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+    darkTheme(true);
+}
+
 document.getElementById('themeSelect').addEventListener('change', (e) => {
     localStorage.setItem('selectedTheme', e.currentTarget.value || 'light')
     if (e.currentTarget.value === 'dark') {
-        let style = document.getElementById('bootstrap');
-        style.setAttribute('href', './css/bootstrap-bootswatch.min.css')
-        console.log(style);
+        darkTheme(true);
         
     } else {
-        let style = document.getElementById('bootstrap');
-        style.setAttribute('href', './css/bootstrap.min.css')
+        darkTheme();
     }
 
 })
