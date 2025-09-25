@@ -29,8 +29,8 @@ let password = document.getElementsByName('password')[0];
 let timerContainer = document.getElementsByClassName('timer')[0];
 let loginContainer = document.getElementsByClassName('login-form')[0];
 timerContainer.style.display = 'none';
-const USERS = ['Ahmed Bouramdane', 'Youssef'];
-const PASSWORDS = ['AhmedB1234', 'Youssefenn'];
+const USERS = ['Ahmed Bouramdane', 'Youssef', "Haytham"];
+const PASSWORDS = ['AhmedB1234', 'Youssefenn', "Haytham1234"];
 
 function updateClassroom(password) {
     let classroom = document.getElementById('classroom');
@@ -38,6 +38,8 @@ function updateClassroom(password) {
         classroom.innerHTML = `1<sup>ère</sup> année Bac Science Math 2`;
     } else if (password === 'Youssefenn') {
         classroom.innerHTML = `1<sup>ère</sup> année Bac Science Math 1 `;
+    } else if (password === 'Haytham1234') {
+        classroom.innerHTML = `1<sup>ère</sup> année Bac Science Math 5 `;
     } else {
         classroom.innerHTML = `Classroom not found`;
     }
