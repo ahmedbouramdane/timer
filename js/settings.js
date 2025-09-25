@@ -1,5 +1,5 @@
 // Set the sound name in the local storage to use it in main.js
-document.getElementById('alarm-audio').src = localStorage.getItem('selectedSound') || 'alarm1.mp3';
+document.getElementById('alarm-audio').src = localStorage.getItem('selectedSound') || './audio/alarm1.mp3';
 document.getElementById('soundSelect').addEventListener('change', function() {
     localStorage.setItem('selectedSound', this.value);
     // set alarm sound source from local storage or default sound
