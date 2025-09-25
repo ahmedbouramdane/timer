@@ -167,7 +167,7 @@ function showModal() {
     myModal.show();
     // set alarm sound source from local storage or default sound
     let alarmAudio = document.getElementById('alarm-audio');
-    let selectedSound = localStorage.getItem('selectedSound') || 'alarm1.mp3';
+    let selectedSound = localStorage.getItem('selectedSound') || './audio/alarm1.mp3';
     alarmAudio.src = `${selectedSound}`;
     document.getElementById('alarm-audio').play();
 
