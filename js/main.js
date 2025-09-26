@@ -1,6 +1,10 @@
+let container = document.getElementById("container"),
+    nav = document.getElementsByTagName('nav')[0],
+    footer = document.getElementsByTagName('footer')[0],
+     windowHeight = window.innerHeight;
+
 // activate full screen and change the container height when the window is resized or clicked
 window.addEventListener('resize', () => {
-    const windowHeight = window.innerHeight;
     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 });
 window.addEventListener('click', () => {
@@ -15,12 +19,11 @@ window.addEventListener('click', () => {
     }
 });
 
+function setHeight(footer=false) {
+    container.style.height = `${windowHeight - nav.offsetHeight - footer.offsetHeight}px`;
+}
 
 
-let container = document.getElementById("container"),
-    nav = document.getElementsByTagName('nav')[0],
-    footer = document.getElementsByTagName('footer')[0];
-const windowHeight = window.innerHeight;
 container.style.minHeight = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 
 //****************** */ Start - Login settings *************************
@@ -85,6 +88,7 @@ let totalSeconds = 0;
 let isPaused = false;
 let remainingSeconds = 0;
 let begin = true;
+let allSecondsInTheRound = 0;
 // time pattern regex with empty time: 00:00:00
 let pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/; // regex for HH:MM:SS 24-hour format
 
@@ -93,6 +97,12 @@ function updateTimeDisplay(seconds) {
     const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
     const secs = String(seconds % 60).padStart(2, '0');
     timeShow.innerHTML = `${hours}:${minutes}:${secs}`;
+    // progress bar
+    const percentage = ((seconds * 100) / allSecondsInTheRound).toFixed(0);
+    const progress = document.getElementsByClassName("progress-bar")[0];
+
+    progress.setAttribute('style', `width: ${!isNaN(percentage) ? percentage : 0}% !important`)
+    progress.innerText = `${!isNaN(percentage) ? percentage : 0}%`
 }
 
 startBtn.addEventListener('click', () => {
@@ -111,6 +121,7 @@ startBtn.addEventListener('click', () => {
     if (isPaused) {
         startBtn.innerHTML = 'Start';
         totalSeconds = remainingSeconds;
+        allSecondsInTheRound = remainingSeconds;
     }
     interval = setInterval(() => {
         if (totalSeconds > 0) {
@@ -137,6 +148,7 @@ resetBtn.addEventListener('click', () => {
     clearInterval(interval);
     isPaused = false;
     totalSeconds = 0;
+    allSecondsInTheRound = 0;
     remainingSeconds = 0;
     updateTimeDisplay(totalSeconds);
     if (timePicker._flatpickr) {
@@ -154,7 +166,9 @@ function updateTime() {
         const minutes = parseInt(timeParts[1], 10) || 0;
         const seconds = parseInt(timeParts[2], 10) || 0;
         totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        allSecondsInTheRound = totalSeconds;
         updateTimeDisplay(totalSeconds);
+        
     }
 }
 document.getElementById('time-flatpickr').addEventListener('input', () => {
@@ -182,21 +196,21 @@ setInterval(() => {
         el.addEventListener('click', () => {
             document.getElementById('alarm-audio').pause();
             document.getElementById('alarm-audio').currentTime = 0;
-                begin = true;
-                startBtn.innerHTML = 'Start';
-                clearInterval(interval);
-                isPaused = false;
-                totalSeconds = 0;
-                remainingSeconds = 0;
-                updateTimeDisplay(totalSeconds);
-                if (timePicker._flatpickr) {
-                    timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
-                }
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                resetBtn.disabled = true;
+            begin = true;
+            startBtn.innerHTML = 'Start';
+            clearInterval(interval);
+            isPaused = false;
+            totalSeconds = 0;
+            remainingSeconds = 0;
+            updateTimeDisplay(totalSeconds);
+            if (timePicker._flatpickr) {
+                timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
+            }
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            resetBtn.disabled = true;
 
-                updateTime();
+            updateTime();
         });
     }); 
 

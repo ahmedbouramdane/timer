@@ -23,6 +23,7 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - Responsive design
 - Sound notification when time is up
 - Settings control (songs, theme, screen...)
+- Progress bar with percentage
 - etc...
 
 ## Technologies used

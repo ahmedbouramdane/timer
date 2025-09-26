@@ -54,6 +54,9 @@
         </div>
         <hr>
         <div class="time-show display-1"><span id="hours">00</span><span>:</span><span id="minutes">00</span><span>:</span><span id="seconds">00</span></div>
+        <div class="progress" style="height: 30px;">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"> </div>
+        </div>
         <hr>
         <h3 class="classroom text-center mt-4 mb-0" id="classroom">1<sup>ère</sup> année BAC Science Math/Exp</h3>
         <audio id="alarm-audio" src="./audio/alarm1.mp3" type="audio/mpeg"></audio>
@@ -151,10 +154,12 @@
                   <label class="form-label" for="soundSelect">Select Alarm Sound:</label>
                   <select class="form-select" id="soundSelect">
                     <option value="./audio/alarm1.mp3" selected>Default Alarm</option>
+                    <option value="./audio/alarm7.mp3">School bell</option>
                     <option value="./audio/alarm4.mp3">Clock alarm</option>
                     <option value="./audio/alarm2.mp3">City alert siren loop </option>
                     <option value="./audio/alarm3.mp3">Police Operation Siren</option>
                     <option value="./audio/alarm5.mp3">Turkey song</option>
+                    <option value="./audio/alarm6.mp3">air raid siren </option>
                   </select>
                 </div>
                 <div class="form-check form-switch mb-3">

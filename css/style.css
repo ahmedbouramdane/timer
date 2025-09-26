@@ -9,6 +9,9 @@
     height: 85px !important;
 }
 
+
+
+
 @font-face {
     font-family: 'Digital7';
     src: url('../fonts/digital-7/digital-7.ttf') format('truetype');
@@ -51,6 +54,7 @@
     }
 
     .timer-container {
+
         button {
             font-size: 0.8rem;
             padding: 0.4rem 0.6rem;
@@ -89,4 +93,9 @@
 .btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+/* Progress bar */
+.progress {
+    margin-top: -20px;
 }
