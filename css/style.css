@@ -72,6 +72,11 @@
         text-align: center;
         font-weight: bold;
     }
+
+    .progress {
+    margin-top: 5px;
+    }
+
 }
 
 .time-up-img {
