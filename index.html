@@ -26,20 +26,6 @@
     </nav>
     <main class="container bg-white" id="container">
       <div class="high-school-logo d-flex justify-content-evenly align-items-center"><img class="w-25 me-3" src="./imgs/apee.png" alt="Logo"><img class="w-25 me-3" src="./imgs/lydex.png" alt="Logo" style="scale: 0.8;"></div>
-      <div class="login-form mx-auto w-50 bg-light p-2 rounded-2 border shadow mt-4">
-        <h1 class="text-center mb-5">Login Page</h1>
-        <div class="mb-4">
-          <label class="form-label w-75 mx-auto fw-bold d-block" for="name">Enter the username : </label>
-          <input class="form-control w-75 mx-auto" type="text" id="name" name="username">
-        </div>
-        <div class="mb-4">
-          <label class="form-label w-75 mx-auto fw-bold d-block" for="password">Enter the password : </label>
-          <input class="form-control w-75 mx-auto" type="password" id="password" name="password">
-        </div>
-        <div class="mb-4 d-grid" id="login-btn">
-          <div class="btn btn-primary w-75 mx-auto">Login to your account </div>
-        </div>
-      </div>
       <div class="timer bg-light border shadow-sm p-3 mt-0">
         <div class="set-time d-flex align-items-center mb-3 justify-content-evenly">
           <div class="timer-settings d-flex align-items-center">
@@ -49,7 +35,7 @@
           <div class="btn-group" role="group" aria-label="Timer Controls">
             <button class="btn btn-success btn-lg" id="start-btn" type="button">Start</button>
             <button class="btn btn-warning btn-lg" id="pause-btn" type="button" disabled>Pause</button>
-            <button class="btn btn-danger btn-lg mb-2" id="reset-btn" type="button" disabled>Reset</button>
+            <button class="btn btn-danger btn-lg" id="reset-btn" type="button" disabled>Reset</button>
           </div>
         </div>
         <hr>
@@ -58,7 +44,7 @@
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"> </div>
         </div>
         <hr>
-        <h3 class="classroom text-center mt-4 mb-0" id="classroom">1<sup>ère</sup> année BAC Science Math/Exp</h3>
+        <h3 class="classroom text-center mt-4 mb-0 fs-xl" id="classroom">By <span class="fw-bold">Ahmed Bouramdane</span></h3>
         <audio id="alarm-audio" src="./audio/alarm1.mp3" type="audio/mpeg"></audio>
         <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -172,7 +158,6 @@
         </div>
       </div>
     </main>
-    <footer class="d-flex justify-content-evenly bg-primary p-2 text-light fs-4"><span>&copy; 2025 All right reserved </span><span>Developed by <i>Ahmed Bouramdane</i></span><span>Lydex de Rabat</span></footer>
     <script src="./js/flatpickr.js"> </script>
     <script>
       // initialize flatpickr for time input field with seconds and 24-hour format in large screens

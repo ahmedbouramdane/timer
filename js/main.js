@@ -1,37 +1,42 @@
 let container = document.getElementById("container"),
     nav = document.getElementsByTagName('nav')[0],
-    footer = document.getElementsByTagName('footer')[0],
+    // footer = document.getElementsByTagName('footer')[0],
      windowHeight = window.innerHeight;
 
 // activate full screen and change the container height when the window is resized or clicked
-window.addEventListener('resize', () => {
-    container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
-});
-window.addEventListener('click', () => {
-    const windowHeight = window.innerHeight;
-    container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
-});
-window.addEventListener('click', () => {
+// window.addEventListener('resize', () => {
+//     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
+// });
+// window.addEventListener('click', () => {
+//     const windowHeight = window.innerHeight;
+//     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
+// });
+window.addEventListener('dblclick', () => {
+    
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch((err) => {
             console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
     }
+//     const windowHeight = window.innerHeight;
+// container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
+
 });
 
-function setHeight(footer=false) {
-    container.style.height = `${windowHeight - nav.offsetHeight - footer.offsetHeight}px`;
-}
+// function setHeight(footer=false) {
+//     container.style.height = `${windowHeight - nav.offsetHeight - footer.offsetHeight}px`;
+// }
 
 
-container.style.minHeight = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
+// container.style.minHeight = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 
 //****************** */ Start - Login settings *************************
 let username = document.getElementsByName('username')[0];
 let password = document.getElementsByName('password')[0];
 let timerContainer = document.getElementsByClassName('timer')[0];
+/*
 let loginContainer = document.getElementsByClassName('login-form')[0];
-timerContainer.style.display = 'none';
+// timerContainer.style.display = 'none';
 const USERS = ['Ahmed Bouramdane', 'Youssef', "Haytham"];
 const PASSWORDS = ['AhmedB1234', 'Youssefenn', "Haytham1234"];
 
@@ -47,7 +52,6 @@ function updateClassroom(password) {
         classroom.innerHTML = `Classroom not found`;
     }
 }
-
 document.getElementById("login-btn").addEventListener('click', () => {
     if (USERS.includes(username.value) && PASSWORDS.includes(password.value)) {
         timerContainer.style.display = 'block';
@@ -73,9 +77,10 @@ document.getElementById("login-btn").addEventListener('click', () => {
         
     }
 })
+*/
 
 //****************** */ End - Login settings *************************
-
+let na = 34;
 
 //****************** */ Start - Timer Container *************************
 let startBtn = document.getElementById('start-btn');
@@ -238,14 +243,6 @@ function applyResponsiveDesign() {
         resetBtn.classList.remove('btn-md', 'w-100', 'mb-2');
         resetBtn.classList.add('btn-lg');       
     } 
-    // login full width on small screens
-    if (window.innerWidth < 576) {
-        loginContainer.classList.remove('w-50');
-        loginContainer.classList.add('w-100', 'px-3');
-    } else {
-        loginContainer.classList.remove('w-100', 'px-3');
-        loginContainer.classList.add('w-50');        
-    }
     // avoid high school logo stretching on small screens
     const logoContainer = document.querySelector('.high-school-logo');
     if (window.innerWidth < 576) {
@@ -278,11 +275,11 @@ function applyResponsiveDesign() {
     }
 
     // footer items flex to column on small screens
-    const footerDiv = document.querySelector('footer');
-    if (window.innerWidth < 576) {
-        footerDiv.classList.remove('flex-row', 'justify-content-between');
-        footerDiv.classList.add('flex-column', 'align-items-center', 'gap-2');
-    }
+    // const footerDiv = document.querySelector('footer');
+    // if (window.innerWidth < 576) {
+    //     footerDiv.classList.remove('flex-row', 'justify-content-between');
+    //     footerDiv.classList.add('flex-column', 'align-items-center', 'gap-2');
+    // }
 }
 
 applyResponsiveDesign();
