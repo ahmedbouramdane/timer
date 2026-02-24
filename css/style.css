@@ -1,106 +1,261 @@
 .time-show {
-    display: flex;
-    justify-content: center;
-    font-family: 'Digital7', sans-serif;
-    font-size: 12rem;
+  display: flex;
+  justify-content: center;
+  font-family: "Digital7", sans-serif;
+  font-size: 12rem;
 }
 
 .high-school-logo {
-    height: 85px !important;
+  height: 85px !important;
 }
 
+/* Custom Time Inputs */
+.time-input-group .time-input {
+  width: 70px;
+  font-size: 2rem;
+  padding: 0.25rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  background-color: transparent;
+}
+.time-input-group .time-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+.time-separator {
+  font-size: 2rem;
+}
+/* Hide number scroll arrows */
+.time-input::-webkit-inner-spin-button,
+.time-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.time-input[type="number"] {
+  -moz-appearance: textfield;
+}
 
+/* Theme variables and dark theme */
+:root {
+  --bg-main: #f8f9fa;
+  --bg-timer: #ffffff;
+  --text-color: #212529;
+  --border-color: #dee2e6;
+}
 
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+.timer {
+  background-color: var(--bg-timer) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
 
+body.dark-theme {
+  --bg-main: #121212;
+  --bg-timer: #1e1e1e;
+  --text-color: #f8f9fa;
+  --border-color: #333333;
+}
+body.dark-theme .form-label,
+body.dark-theme .classroom,
+body.dark-theme .time-show,
+body.dark-theme .time-separator {
+  color: #f8f9fa !important;
+}
+body.dark-theme .modal-content {
+  background-color: var(--bg-timer);
+  color: var(--text-color);
+}
+body.dark-theme .time-input {
+  background-color: #2a2a2a;
+  color: #f8f9fa;
+  border-color: #444;
+}
+body.dark-theme .bg-white {
+  background-color: var(--bg-main) !important;
+}
+body.dark-theme .bg-light {
+  background-color: var(--bg-timer) !important;
+}
+body.dark-theme hr {
+  border-color: #444;
+}
+body.dark-theme .text-muted {
+  color: #adb5bd !important;
+}
 @font-face {
-    font-family: 'Digital7';
-    src: url('../fonts/digital-7/digital-7.ttf') format('truetype');
+  font-family: "Digital7";
+  src: url("../fonts/digital-7/digital-7.ttf") format("truetype");
 }
 
 /* media query for small devices */
 @media (max-width: 576px) {
-    .time-show {
-        font-size: 8rem;
-    }
-    .navbar .navbar-brand .align-middle {
-        font-size: 0.8rem;
-    }
-    footer .text-muted {
-        font-size: 0.8rem;
-    }
-    #classroom {
-        font-size: 0.8rem;
-    }
-    /* login */
-    .login-form {
-        padding: 1rem;
-    }
-    .login-form .form-control {
-        font-size: 1rem;
-    }
-    .login-form .btn {
-        font-size: 1rem;
-    }
-    .high-school-logo {
-        height: 50px !important;
-    }
-    .high-school-logo img {
-        height: 100%;
-    }
-    
-    footer span {
-        font-size: 1rem;
-        text-align: center;
-    }
+  .time-show {
+    font-size: 8rem;
+  }
+  .navbar .navbar-brand .align-middle {
+    font-size: 0.8rem;
+  }
+  footer .text-muted {
+    font-size: 0.8rem;
+  }
+  #classroom {
+    font-size: 0.8rem;
+  }
+  /* login */
+  .login-form {
+    padding: 1rem;
+  }
+  .login-form .form-control {
+    font-size: 1rem;
+  }
+  .login-form .btn {
+    font-size: 1rem;
+  }
+  .high-school-logo {
+    height: 50px !important;
+  }
+  .high-school-logo img {
+    height: 100%;
+  }
 
-    .timer-container {
+  footer span {
+    font-size: 1rem;
+    text-align: center;
+  }
 
-        button {
-            font-size: 0.8rem;
-            padding: 0.4rem 0.6rem;
-            height: fit-content;
-        }
+  .timer-container {
+    button {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+      height: fit-content;
     }
+  }
 
-    .time-show {
-        font-size: 6rem;
-    }
+  .time-show {
+    font-size: 6rem;
+  }
 
-    /* change modal title on small devices - about - contact */
-    #aboutModal .modal-title, #contactModal .modal-title {
-        font-size: 1rem;
-        text-align: center;
-        font-weight: bold;
-    }
+  /* change modal title on small devices - about - contact */
+  #aboutModal .modal-title,
+  #contactModal .modal-title {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+  }
 
-    .progress {
+  .progress {
     margin-top: 5px;
-    }
-
+  }
 }
 
 .time-up-img {
-    animation: pulse 2s infinite alternate;
+  animation: pulse 2s infinite alternate;
 }
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* force style for disabled buttons */
 .btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* Progress bar */
 .progress {
-    margin-top: -10px;
+  margin-top: -10px;
+}
+
+/* Footer Styles & Animations */
+.timer-footer {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+}
+body.dark-theme .timer-footer {
+    background: linear-gradient(135deg, #1e1e1e, #121212);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.4);
+}
+.code-logo {
+    animation: pulseLogo 3s infinite alternate ease-in-out;
+}
+@keyframes pulseLogo {
+    0% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 193, 7, 0.4); }
+    100% { transform: scale(1.15); text-shadow: 0 0 15px rgba(255, 193, 7, 0.8); }
+}
+
+/* Timer Container entrance animation */
+.timer-container, .timer {
+    animation: slideUpFade 0.6s ease-out forwards;
+}
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover effects for buttons */
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Identity Color Overrides */
+:root {
+    --identity-color: #0d6efd;
+}
+.timer-footer {
+    background: linear-gradient(135deg, var(--identity-color), rgba(0,0,0,0.4)) !important;
+}
+.btn-primary, .bg-primary, .btn-primary:hover {
+    background-color: var(--identity-color) !important;
+    border-color: var(--identity-color) !important;
+}
+.text-primary {
+    color: var(--identity-color) !important;
+}
+
+/* Typing Cursor Animation */
+#typing-text::after {
+    content: '|';
+    animation: blinkCursor 0.8s infinite;
+}
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Number Pop Animation */
+.animate-num {
+    display: inline-block;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
 }

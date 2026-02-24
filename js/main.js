@@ -86,7 +86,10 @@ let na = 34;
 let startBtn = document.getElementById('start-btn');
 let pauseBtn = document.getElementById('pause-btn');
 let resetBtn = document.getElementById('reset-btn');
-let timePicker = document.getElementById('time-flatpickr');
+// Replaced flatpickr with native inputs
+let inputHours = document.getElementById('input-hours');
+let inputMinutes = document.getElementById('input-minutes');
+let inputSeconds = document.getElementById('input-seconds');
 let timeShow = document.getElementsByClassName('time-show')[0];
 let interval;
 let totalSeconds = 0;
@@ -94,29 +97,31 @@ let isPaused = false;
 let remainingSeconds = 0;
 let begin = true;
 let allSecondsInTheRound = 0;
-// time pattern regex with empty time: 00:00:00
-let pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/; // regex for HH:MM:SS 24-hour format
 
 function updateTimeDisplay(seconds) {
     const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
     const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
     const secs = String(seconds % 60).padStart(2, '0');
-    timeShow.innerHTML = `${hours}:${minutes}:${secs}`;
+    timeShow.innerHTML = `<span id="hours" class="animate-num">${hours}</span><span class="time-separator">:</span><span id="minutes" class="animate-num">${minutes}</span><span class="time-separator">:</span><span id="seconds" class="animate-num">${secs}</span>`;
     // progress bar
     const percentage = ((seconds * 100) / allSecondsInTheRound).toFixed(0);
     const progress = document.getElementsByClassName("progress-bar")[0];
 
-    progress.setAttribute('style', `width: ${!isNaN(percentage) ? percentage : 0}% !important`)
-    progress.innerText = `${!isNaN(percentage) ? percentage : 0}%`
+    progress.setAttribute('style', `width: ${!isNaN(percentage) ? 100 - percentage : 0}% !important`)
+    progress.innerText = `${!isNaN(percentage) ? 100 - percentage : 0}%`
 }
 
 startBtn.addEventListener('click', () => {
-    if (!pattern.test(document.getElementById('time-flatpickr').value) || document.getElementById('time-flatpickr').value === "00:00:00") {
+    // Validate inputs
+    let h = parseInt(inputHours.value) || 0;
+    let m = parseInt(inputMinutes.value) || 0;
+    let s = parseInt(inputSeconds.value) || 0;
+    
+    if (h === 0 && m === 0 && s === 0) {
         // show bootstrap toast for invalid time format automatically
         let toastEl = document.querySelector('#invalidTimeToast .toast');
         let toast = new bootstrap.Toast(toastEl);
         toast.show();
-        document.getElementById('time-flatpickr').value = "00:00:00"; // Reset to default value
         return; // Stop processing if input is invalid
     }
     begin = false;
@@ -127,6 +132,12 @@ startBtn.addEventListener('click', () => {
         startBtn.innerHTML = 'Start';
         totalSeconds = remainingSeconds;
         allSecondsInTheRound = remainingSeconds;
+    } else {
+        // Compute total seconds if starting from beginning (not paused)
+        if (remainingSeconds === 0) {
+            totalSeconds = h * 3600 + m * 60 + s;
+            allSecondsInTheRound = totalSeconds;
+        }
     }
     interval = setInterval(() => {
         if (totalSeconds > 0) {
@@ -156,28 +167,41 @@ resetBtn.addEventListener('click', () => {
     allSecondsInTheRound = 0;
     remainingSeconds = 0;
     updateTimeDisplay(totalSeconds);
-    if (timePicker._flatpickr) {
-        timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
-    }
+    
+    // Reset inputs
+    inputHours.value = '00';
+    inputMinutes.value = '00';
+    inputSeconds.value = '00';
+    
     startBtn.disabled = false;
     pauseBtn.disabled = true;
     resetBtn.disabled = true;
+    
+    // reset progress bar width visually
+    const progress = document.getElementsByClassName("progress-bar")[0];
+    progress.setAttribute('style', `width: 0% !important`)
+    progress.innerText = `0%`
 });
 
 function updateTime() {
-    const timeParts = document.getElementById('time-flatpickr').value.split(':');
-    if (timeParts.length === 3) {
-        const hours = parseInt(timeParts[0], 10) || 0;
-        const minutes = parseInt(timeParts[1], 10) || 0;
-        const seconds = parseInt(timeParts[2], 10) || 0;
-        totalSeconds = hours * 3600 + minutes * 60 + seconds;
-        allSecondsInTheRound = totalSeconds;
-        updateTimeDisplay(totalSeconds);
-        
-    }
+    const hours = parseInt(inputHours.value, 10) || 0;
+    const minutes = parseInt(inputMinutes.value, 10) || 0;
+    const seconds = parseInt(inputSeconds.value, 10) || 0;
+    
+    // Limit minutes and seconds to 59 automatically
+    if (inputMinutes.value > 59) inputMinutes.value = 59;
+    if (inputSeconds.value > 59) inputSeconds.value = 59;
+
+    totalSeconds = hours * 3600 + (parseInt(inputMinutes.value, 10) || 0) * 60 + (parseInt(inputSeconds.value, 10) || 0);
+    allSecondsInTheRound = totalSeconds;
+    updateTimeDisplay(totalSeconds);
 }
-document.getElementById('time-flatpickr').addEventListener('input', () => {
-    updateTime();
+
+// Add event listeners to new inputs
+[inputHours, inputMinutes, inputSeconds].forEach(input => {
+    input.addEventListener('input', updateTime);
+    // Select all on focus
+    input.addEventListener('focus', function() { this.select(); });
 });
 
 // show the bs model that in the timer pug file automatically when the time is up and play sound
@@ -208,9 +232,12 @@ setInterval(() => {
             totalSeconds = 0;
             remainingSeconds = 0;
             updateTimeDisplay(totalSeconds);
-            if (timePicker._flatpickr) {
-                timePicker._flatpickr.setDate("00:00:00", true); // Reset flatpickr input
-            }
+            
+            // Reset inputs
+            inputHours.value = '00';
+            inputMinutes.value = '00';
+            inputSeconds.value = '00';
+
             startBtn.disabled = false;
             pauseBtn.disabled = true;
             resetBtn.disabled = true;
@@ -285,6 +312,51 @@ function applyResponsiveDesign() {
 applyResponsiveDesign();
 window.addEventListener('resize', applyResponsiveDesign);   
 // onload 
-window.addEventListener('load', applyResponsiveDesign);
+window.addEventListener('load', () => {
+    applyResponsiveDesign();
+    // Set dynamic year in footer
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+});
+
+// Typing Animation
+const typingText = document.getElementById('typing-text');
+const words = ["</> made by Ahmed Bouramdane", "Lydex de Rabat 2025-2026"];
+let wordIndex = 0;
+let letterIndex = 0;
+let currentWord = "";
+let isDeleting = false;
+
+function typeEffect() {
+    if (!typingText) return;
+
+    currentWord = words[wordIndex];
+    
+    if (isDeleting) {
+        typingText.textContent = currentWord.substring(0, letterIndex - 1);
+        letterIndex--;
+    } else {
+        typingText.textContent = currentWord.substring(0, letterIndex + 1);
+        letterIndex++;
+    }
+
+    let typeSpeed = isDeleting ? 30 : 80;
+
+    if (!isDeleting && letterIndex === currentWord.length) {
+        typeSpeed = 2000; // Pause at end of word
+        isDeleting = true;
+    } else if (isDeleting && letterIndex === 0) {
+        isDeleting = false;
+        wordIndex++;
+        if (wordIndex >= words.length) wordIndex = 0;
+        typeSpeed = 500; // Pause before typing next word
+    }
+
+    setTimeout(typeEffect, typeSpeed);
+}
+// Start typing animation
+if(typingText) typeEffect();
 
 //****************** */ End - Responsive Design ************************* 

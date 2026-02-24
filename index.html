@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./imgs/icon.png">
     <title>Timer - Ahmed Bouramdane</title>
-    <link rel="stylesheet" href="./css/flatpickr.min.css">
     <link rel="stylesheet" href="./css/all.min.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css" id="bootstrap">
     <link rel="stylesheet" href="./css/style.css">
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary fs-4">
       <div class="container"><a class="navbar-brand" href="#"> <img class=" bg-light rounded-circle d-inline-block align-text-top me-2" src="./imgs/icon.png" alt="Logo" height="50px">
           <div class="align-middle d-inline-block fw-bold" style="font-size: 1.5rem; margin-bottom: -15px;">School Timer </div></a>
@@ -24,13 +24,17 @@
         </div>
       </div>
     </nav>
-    <main class="container bg-white" id="container">
+    <main class="container bg-white flex-grow-1" id="container">
       <div class="high-school-logo d-flex justify-content-evenly align-items-center"><img class="w-25 me-3" src="./imgs/apee.png" alt="Logo"><img class="w-25 me-3" src="./imgs/lydex.png" alt="Logo" style="scale: 0.8;"></div>
       <div class="timer bg-light border shadow-sm p-3 mt-0">
         <div class="set-time d-flex align-items-center mb-3 justify-content-evenly">
-          <div class="timer-settings d-flex align-items-center">
-            <label class="form-label w-50 fw-bold" for="time-flatpickr">Set Timer:</label>
-            <input class="form-control" id="time-flatpickr" type="text" placeholder="Select Time" readonly>
+          <div class="timer-settings d-flex align-items-center column-gap-3">
+            <label class="form-label fw-bold mb-0" for="time-input-group">Set Timer:</label>
+            <div class="time-input-group d-flex align-items-center">
+              <input class="form-control time-input text-center" id="input-hours" type="number" min="0" max="99" placeholder="HH" value="00"><span class="time-separator mx-1 fw-bold">:</span>
+              <input class="form-control time-input text-center" id="input-minutes" type="number" min="0" max="59" placeholder="MM" value="00"><span class="time-separator mx-1 fw-bold">:</span>
+              <input class="form-control time-input text-center" id="input-seconds" type="number" min="0" max="59" placeholder="SS" value="00">
+            </div>
           </div>
           <div class="btn-group" role="group" aria-label="Timer Controls">
             <button class="btn btn-success btn-lg" id="start-btn" type="button">Start</button>
@@ -44,7 +48,7 @@
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"> </div>
         </div>
         <hr>
-        <h3 class="classroom text-center mt-4 mb-0 fs-xl" id="classroom">By <span class="fw-bold">Ahmed Bouramdane</span></h3>
+        <h3 class="classroom text-center mt-4 mb-0 fs-xl" id="classroom"><span id="typing-text" class="fw-bold text-primary"></> made by Ahmed Bouramdane</span></h3>
         <audio id="alarm-audio" src="./audio/alarm1.mp3" type="audio/mpeg"></audio>
         <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -148,6 +152,14 @@
                     <option value="./audio/alarm6.mp3">air raid siren </option>
                   </select>
                 </div>
+                <div class="mb-3">
+                  <label class="form-label" for="volumeSlider">Alarm Volume:</label>
+                  <input class="form-range" id="volumeSlider" type="range" min="0" max="1" step="0.1" value="1">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="colorPicker">Identity Color:</label>
+                  <input class="form-control form-control-color" id="colorPicker" type="color" value="#0d6efd" title="Choose your color">
+                </div>
                 <div class="form-check form-switch mb-3">
                   <input class="form-check-input" type="checkbox" id="fullscreenToggle">
                   <label class="form-check-label" for="fullscreenToggle">Enable Fullscreen Mode on Start</label>
@@ -158,27 +170,11 @@
         </div>
       </div>
     </main>
-    <script src="./js/flatpickr.js"> </script>
-    <script>
-      // initialize flatpickr for time input field with seconds and 24-hour format in large screens
-      if (window.innerWidth >= 576) { // Bootstrap's sm breakpoint
-      flatpickr("#time-flatpickr", {
-          enableTime: true,      // enable time picker
-          enableSeconds: true,   // show seconds in tooltip
-          noCalendar: true,      // hide date
-          dateFormat: "H:i:S",   // 24-hour format with seconds
-          time_24hr: true,        // remove AM/PM
-          defaultDate: "00:00:00" 
-      });
-      } else {
-          // For small screens, use a simple text input without flatpickr
-          const timeInput = document.getElementById('time-flatpickr');
-          timeInput.type = 'text'; // Change to simple text input
-          timeInput.placeholder = 'Enter time as HH:MM:SS'; // Update placeholder
-          timeInput.value = ''; // Clear any existing value
-          timeInput.readOnly = false; // Make it editable
-      }
-    </script>
+    <footer class="timer-footer mt-auto d-flex flex-column flex-sm-row justify-content-between align-items-center p-3 text-white">
+      <div class="code-logo fs-4 fw-bold mb-2 mb-sm-0 text-warning">&lt;/&gt;</div>
+      <div class="copyright-section text-center mb-2 mb-sm-0 fs-6"><span>&copy; </span><span id="current-year"></span><span> All rights reserved.</span></div>
+      <div class="developer-section fs-6"><span>Developed by <strong class="text-warning">Ahmed Bouramdane</strong></span></div>
+    </footer>
     <script src="./js/all.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js"></script>
