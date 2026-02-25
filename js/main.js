@@ -107,8 +107,8 @@ function updateTimeDisplay(seconds) {
     const percentage = ((seconds * 100) / allSecondsInTheRound).toFixed(0);
     const progress = document.getElementsByClassName("progress-bar")[0];
 
-    progress.setAttribute('style', `width: ${!isNaN(percentage) ? 100 - percentage : 0}% !important`)
-    progress.innerText = `${!isNaN(percentage) ? 100 - percentage : 0}%`
+    progress.setAttribute('style', `width: ${!isNaN(percentage) ? percentage : 100}% !important`)
+    progress.innerText = `${!isNaN(percentage) ? percentage : 100}%`
 }
 
 startBtn.addEventListener('click', () => {
@@ -179,8 +179,8 @@ resetBtn.addEventListener('click', () => {
     
     // reset progress bar width visually
     const progress = document.getElementsByClassName("progress-bar")[0];
-    progress.setAttribute('style', `width: 0% !important`)
-    progress.innerText = `0%`
+    progress.setAttribute('style', `width: 100% !important`)
+    progress.innerText = `100%`
 });
 
 function updateTime() {
@@ -215,37 +215,35 @@ function showModal() {
     document.getElementById('alarm-audio').play();
 
 }
+// Handle modal close event globally, works for backdrop clicks and buttons
+document.getElementById('timeUpModal').addEventListener('hidden.bs.modal', () => {
+    document.getElementById('alarm-audio').pause();
+    document.getElementById('alarm-audio').currentTime = 0;
+    begin = true;
+    startBtn.innerHTML = 'Start';
+    clearInterval(interval);
+    isPaused = false;
+    totalSeconds = 0;
+    remainingSeconds = 0;
+    updateTimeDisplay(totalSeconds);
+    
+    // Reset inputs
+    inputHours.value = '00';
+    inputMinutes.value = '00';
+    inputSeconds.value = '00';
+
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = true;
+
+    updateTime();
+});
+
 setInterval(() => {
     if (totalSeconds === 0 && !isPaused && !begin) {
         showModal();
         isPaused = true; // To prevent multiple modal pop-ups
     } 
-
-    document.querySelectorAll('.close, .btn-danger').forEach(el => {
-        el.addEventListener('click', () => {
-            document.getElementById('alarm-audio').pause();
-            document.getElementById('alarm-audio').currentTime = 0;
-            begin = true;
-            startBtn.innerHTML = 'Start';
-            clearInterval(interval);
-            isPaused = false;
-            totalSeconds = 0;
-            remainingSeconds = 0;
-            updateTimeDisplay(totalSeconds);
-            
-            // Reset inputs
-            inputHours.value = '00';
-            inputMinutes.value = '00';
-            inputSeconds.value = '00';
-
-            startBtn.disabled = false;
-            pauseBtn.disabled = true;
-            resetBtn.disabled = true;
-
-            updateTime();
-        });
-    }); 
-
 }, 1000);
 
 

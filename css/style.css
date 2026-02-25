@@ -9,6 +9,10 @@
   height: 85px !important;
 }
 
+body {
+  background-color: #f8f9fa !important;
+}
+
 /* Custom Time Inputs */
 .time-input-group .time-input {
   width: 70px;
@@ -258,4 +262,61 @@ body.dark-theme .timer-footer {
 @keyframes popIn {
     0% { transform: scale(0.8); opacity: 0.5; }
     100% { transform: scale(1); opacity: 1; }
+}
+
+/* Color Selector Buttons */
+.color-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.active-color {
+    border-color: #333;
+    transform: scale(1.1);
+}
+
+.dark-theme .active-color {
+    border-color: #fff;
+}
+
+/* Time Input Adjustments */
+.time-input {
+    font-family: monospace;
+    font-size: 3rem !important;
+    padding: 0 !important;
+    max-width: 80px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-weight: bold;
+}
+
+.time-input::-webkit-inner-spin-button,
+.time-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Identity background variable uses */
+.bg-primary {
+    background: var(--identity-bg, #0d6efd) !important;
+}
+
+/* Make body background responsive to patterns and gradients */
+body {
+    background: var(--identity-bg, #ffffff) !important;
+    background-size: var(--identity-pattern-size, auto) !important;
+}
+
+.dark-theme body {
+    background: #212529 !important; /* Keep dark theme background solid largely */
 }

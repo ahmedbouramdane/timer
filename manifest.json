@@ -1,0 +1,16 @@
+{
+  "name": "Timer App",
+  "short_name": "Timer",
+  "description": "A beautiful timer app designed for schools by Ahmed Bouramdane.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d6efd",
+  "icons": [
+    {
+      "src": "./imgs/icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}
