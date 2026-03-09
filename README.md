@@ -1,9 +1,12 @@
 # school timer
+
 <!-- logo of the timer -->
+
 ![logo](./imgs/icon.png)
-a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat 
+a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 
 ## Developer Info
+
 - Name: Ahmed Bouramdane
 - Role: Full Stack Developer, Data Analyst(python), Student at Lydex Rabat
 - Location: Rabat, Morocco
@@ -11,6 +14,7 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - GitHub: [ahmedbouramdane](https://github.com/ahmedbouramdane)
 
 ## Utility
+
 - Easy to use
 - Simple
 - Great design
@@ -18,6 +22,7 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - etc...
 
 ## Features
+
 - Start/Pause/Reset buttons
 - Customizable time input
 - Responsive design
@@ -27,6 +32,7 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - etc...
 
 ## Technologies used
+
 - HTML
 - CSS
 - JavaScript
@@ -38,11 +44,14 @@ a simple timer developed by Ahmed Bouramdane, Student at Lydex Rabat
 - Font Awesome (for icons)
 
 ## github pages direct link
+
 https://ahmedbouramdane.github.io/timer/
 
-
 ## Version
+
 - first version (1.0.0) date Saturday 13th September 2025
 
 ## News
+
 - v6(Thu 25/09/2025): Settings updates, theme, add other alarm song
+- new version 2026.2 (25/02/2026): add colors palette, patterns, gradients, and more settings, add service worker for offline support and install on mobile, add new alarm songs, add new features and correct responsive issues

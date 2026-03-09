@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0d6efd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./imgs/icon.png">
+    <link rel="icon" href="./imgs/icon.png" type="image/png">
     <link rel="apple-touch-icon" href="./imgs/icon.png">
-    <title>Timer - Ahmed Bouramdane</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Roboto:wght@400;700&amp;family=Open+Sans:wght@400;700&amp;family=Lato:wght@400;700&amp;family=Montserrat:wght@400;700&amp;family=Oswald:wght@400;700&amp;family=Poppins:wght@400;700&amp;family=Playfair+Display:wght@400;700&amp;family=Nunito:wght@400;700&amp;family=Ubuntu:wght@400;700&amp;family=Orbitron:wght@400;700&amp;family=Kanit:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="icon" href="./imgs/icon.png" type="image/png">
+    <link rel="shortcut icon" href="./imgs/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="./imgs/icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./imgs/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./imgs/icon.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="./imgs/icon.png">
+    <meta name="msapplication-TileImage" content="./imgs/icon.png">
+    <meta name="msapplication-TileColor" content="#0d6efd">
+    <meta property="og:image" content="./imgs/icon.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
     <link rel="stylesheet" href="./css/all.min.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css" id="bootstrap">
     <link rel="stylesheet" href="./css/style.css">
@@ -15,219 +29,314 @@
   <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary fs-4">
       <div class="container"><a class="navbar-brand" href="#"> <img class=" bg-light rounded-circle d-inline-block align-text-top me-2" src="./imgs/icon.png" alt="Logo" height="50px">
-          <div class="align-middle d-inline-block fw-bold" style="font-size: 1.5rem; margin-bottom: -15px;">School Timer </div></a>
+          <div class="align-middle d-inline-block fw-bold" style="font-size: 1.5rem; margin-bottom: -15px;" data-i18n="app_title">School Timer </div></a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav me-auto mt-2 mt-lg-0 justify-content-center w-100 gap-5">
-            <li class="nav-item"><a class="nav-link active" href="#"> <i class="fas fa-home me-2"></i>Home </a></li>
-            <li class="nav-item"><a class="nav-link active" href="#aboutModal" data-bs-toggle="modal"> <i class="fas fa-info me-2"></i>About us</a></li>
-            <li class="nav-item"><a class="nav-link active" href="#contactModal" data-bs-toggle="modal"> <i class="fas fa-envelope me-2"></i>Contact us</a></li>
-            <li class="nav-item"><a class="nav-link active" href="#settingsModal" data-bs-toggle="modal"> <i class="fas fa-cog me-2"></i>Settings</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#" data-i18n="nav_home"> <i class="fas fa-home me-2"></i>Home </a></li>
+            <li class="nav-item"><a class="nav-link active" href="#aboutModal" data-bs-toggle="modal" data-i18n="nav_about"> <i class="fas fa-info me-2"></i>About us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#contactModal" data-bs-toggle="modal" data-i18n="nav_contact"> <i class="fas fa-envelope me-2"></i>Contact us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#settingsModal" data-bs-toggle="modal" data-i18n="nav_settings"> <i class="fas fa-cog me-2"></i>Settings</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <main class="container bg-white flex-grow-1 d-flex flex-column justify-content-center" id="container">
+    <main class="container flex-grow-1 d-flex flex-column justify-content-center" id="container">
       <div class="high-school-logo d-flex justify-content-evenly align-items-center"><img class="w-25 me-3" src="./imgs/apee.png" alt="Logo"><img class="w-25 me-3" src="./imgs/lydex.png" alt="Logo" style="scale: 0.8;"></div>
       <div class="timer bg-light border shadow-sm p-3 mt-0">
+        <div class="ticker-wrap" style="display: none;">
+          <div class="ticker-move" id="customPageTitle"></div>
+        </div>
         <div class="set-time d-flex align-items-center mb-3 justify-content-evenly">
           <div class="timer-settings d-flex align-items-center column-gap-3">
-            <label class="form-label fw-bold mb-0" for="time-input-group">Set Timer:</label>
-            <div class="time-input-group d-flex align-items-center">
-              <input class="form-control time-input text-center" id="input-hours" type="number" min="0" max="99" placeholder="HH" value="00"><span class="time-separator mx-1 fw-bold fs-4 pb-1">:</span>
-              <input class="form-control time-input text-center" id="input-minutes" type="number" min="0" max="59" placeholder="MM" value="00"><span class="time-separator mx-1 fw-bold fs-4 pb-1">:</span>
-              <input class="form-control time-input text-center" id="input-seconds" type="number" min="0" max="59" placeholder="SS" value="00">
+            <label class="form-label fw-bold mb-0" for="time-input-group" data-i18n="timer_set">Set Timer:</label>
+            <div class="time-input-group d-flex align-items-center ltr-enforce">
+              <input class="form-control time-input text-center" id="input-hours" type="number" min="0" max="99" placeholder="HH" value="00" data-bs-toggle="tooltip" data-bs-placement="bottom" data-i18n-title="tooltip_hr"><span class="time-separator mx-1 fw-bold fs-4">:</span>
+              <input class="form-control time-input text-center" id="input-minutes" type="number" min="0" max="59" placeholder="MM" value="00" data-bs-toggle="tooltip" data-bs-placement="bottom" data-i18n-title="tooltip_min"><span class="time-separator mx-1 fw-bold fs-4">:</span>
+              <input class="form-control time-input text-center" id="input-seconds" type="number" min="0" max="59" placeholder="SS" value="00" data-bs-toggle="tooltip" data-bs-placement="bottom" data-i18n-title="tooltip_sec">
             </div>
           </div>
-          <div class="btn-group" role="group" aria-label="Timer Controls">
-            <button class="btn btn-success btn-lg" id="start-btn" type="button">Start</button>
-            <button class="btn btn-warning btn-lg" id="pause-btn" type="button" disabled>Pause</button>
-            <button class="btn btn-danger btn-lg" id="reset-btn" type="button" disabled>Reset</button>
+          <div class="btn-group rtl-btn-group" role="group" aria-label="Timer Controls">
+            <button class="btn btn-success btn-lg" id="start-btn" type="button" data-i18n="btn_start">Start</button>
+            <button class="btn btn-warning btn-lg" id="pause-btn" type="button" disabled data-i18n="btn_pause">Pause</button>
+            <button class="btn btn-danger btn-lg" id="reset-btn" type="button" disabled data-i18n="btn_reset">Reset</button>
           </div>
         </div>
         <hr>
-        <div class="time-show display-1"><span id="hours">00</span><span>:</span><span id="minutes">00</span><span>:</span><span id="seconds">00</span></div>
+        <div class="time-show display-1 ltr-enforce"><span id="hours">00</span><span>:</span><span id="minutes">00</span><span>:</span><span id="seconds">00</span></div>
         <div class="progress" style="height: 30px;">
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"> </div>
         </div>
         <hr>
         <h3 class="classroom text-center mt-4 mb-0 fs-xl" id="classroom"><span id="typing-text" class="fw-bold text-primary"></> made by Ahmed Bouramdane</span></h3>
         <audio id="alarm-audio" src="./audio/alarm1.mp3" type="audio/mpeg" loop></audio>
-        <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-danger" id="timeUpModalLabel">Time's Up!</h5>
-                <button class="btn-close btn-danger" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto time-up-img" src="./imgs/icon.png" alt="Time's Up">
-                <div class="text-center">The countdown has finished.</div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
+      </div>
+    </main>
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aboutModalLabel" data-i18n="about_title">About US - Ahmed Bouramdane</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="text-muted text-center mb-3" data-i18n="about_subtitle">School Timer Application</h4><img class="img-fluid mb-3 w-25 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="About Us">
+            <p> <span data-i18n="about_p1_1">Hi, My name is </span><b data-i18n="about_p1_2">Ahmed Bouramdane</b><span data-i18n="about_p1_3">, I am a computer science student and I am the developer of this Timer application.</span></p>
+            <p data-i18n="about_p2">This timer application is designed for educational purposes, specifically to assist students and teachers in managing time during exams and study sessions.</p>
+            <p data-i18n="about_p3">The application is built using HTML, CSS, JavaScript, Bootstrap and natively crafted time picker functionality.</p>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="aboutModalLabel">About US - Ahmed Bouramdane</h5>
-              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <h4 class="text-muted text-center mb-3">School Timer Application</h4><img class="img-fluid mb-3 w-25 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="About Us">
-              <p>Hi, My name is <b>Ahmed Bouramdane</b>, I am a computer science student and I am the developer of this Timer application.</p>
-              <p>This timer application is designed for educational purposes, specifically to assist students and teachers in managing time during exams and study sessions.</p>
-              <p>The application is built using HTML, CSS, JavaScript, Bootstrap and fatpckr library for the time picker functionality.</p>
-            </div>
+    </div>
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="contactModalLabel" data-i18n="contact_title">Contact US - Ahmed Bouramdane</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="Contact Us">
+            <!-- make the link icons large and organized-->
+            <p class="text-muted text-center" data-i18n="contact_p1">You can reach me through the following social media platforms:</p>
+            <ul class="row list-unstyled justify-content-center gap-3">
+              <li class="col-lg-1 col-2"> <a class="me-2 fs-2" href="https://www.facebook.com/hmad.bwrmdan" target="_blank"><i class="fab fa-facebook-square"></i></a></li>
+              <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a></li>
+              <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.linkedin.com/in/ahmed-bouramdane-b1676b306/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+              <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.instagram.com/ahmed.bouramdane77/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+              <li class="col-lg-1 col-2">  <a class="me-2 fs-2" href="https://github.com/ahmedbouramdane" target="_blank"><i class="fab fa-github"></i></a></li>
+              <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="mailto:ahmedbourmdane77@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+              <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://wa.me/0633977491" target="_blank"><i class="fab fa-whatsapp-square"></i></a></li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="contactModalLabel">Contact US - Ahmed Bouramdane</h5>
-              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto" src="./imgs/icon.png" alt="Contact Us">
-              <!-- make the link icons large and organized-->
-              <p class="text-muted text-center">You can reach us through the following social media platforms:</p>
-              <ul class="row list-unstyled justify-content-center gap-3">
-                <li class="col-lg-1 col-2"> <a class="me-2 fs-2" href="https://www.facebook.com/hmad.bwrmdan" target="_blank"><i class="fab fa-facebook-square"></i></a></li>
-                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a></li>
-                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.linkedin.com/in/ahmed-bouramdane-b1676b306/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://www.instagram.com/ahmed.bouramdane77/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                <li class="col-lg-1 col-2">  <a class="me-2 fs-2" href="https://github.com/ahmedbouramdane" target="_blank"><i class="fab fa-github"></i></a></li>
-                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="mailto:ahmedbourmdane77@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
-                <li class="col-lg-1 col-2"><a class="me-2 fs-2" href="https://wa.me/0633977491" target="_blank"><i class="fab fa-whatsapp-square"></i></a></li>
-              </ul>
-            </div>
-          </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1100;" id="invalidTimeToast">
+      <div class="toast bg-danger mt-4" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+        <div class="toast-header"><strong class="me-auto text-danger"><b data-i18n="toast_notification">Notification:</b> <span class="text-muted" data-i18n="toast_invalid_time">Invalid Time Format</span></strong><small class="text-muted" data-i18n="toast_just_now">Just now</small>
+          <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+        <div class="toast-body bg-danger text-white" data-i18n="toast_invalid_msg">Please enter a valid time greater than 00:00:00.</div>
       </div>
-      <div class="toast-container position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1100;" id="invalidTimeToast">
-        <div class="toast bg-danger mt-4" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-          <div class="toast-header"><strong class="me-auto text-danger"><b>Notification:</b> <span class="text-muted">Invalid Time Format</span></strong><small class="text-muted">Just now</small>
-            <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="settingsModalLabel"><i class="fas fa-cog"></i> <span data-i18n="settings_title">Settings</span></h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="toast-body bg-danger text-white">Please enter a valid time greater than 00:00:00.</div>
-        </div>
-      </div>
-      <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="settingsModalLabel"><i class="fas fa-cog"></i> Settings</h5>
-              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <h4 class="text-muted text-center mb-3">Settings</h4>
-              <form>
+          <div class="modal-body">
+            <ul class="nav nav-tabs mb-3" id="settingsTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="general-setting-tab" data-bs-toggle="tab" data-bs-target="#general-settings" type="button" role="tab" aria-controls="general-settings" aria-selected="true"><i class="fas fa-sliders-h"></i> <span data-i18n="tab_general">General</span></button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="appearance-setting-tab" data-bs-toggle="tab" data-bs-target="#appearance-settings" type="button" role="tab" aria-controls="appearance-settings" aria-selected="false"><i class="fas fa-paint-brush"></i> <span data-i18n="tab_appearance">Appearance</span></button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="audio-setting-tab" data-bs-toggle="tab" data-bs-target="#audio-settings" type="button" role="tab" aria-controls="audio-settings" aria-selected="false"><i class="fas fa-music"></i> <span data-i18n="tab_audio">Audio</span></button>
+              </li>
+            </ul>
+            <div class="tab-content" id="settingsTabsContent">
+              <div class="tab-pane fade show active" id="general-settings" role="tabpanel" aria-labelledby="general-setting-tab">
                 <div class="mb-3">
-                  <label class="form-label" for="themeSelect">Select Theme:</label>
-                  <select class="form-select" id="themeSelect">
-                    <option value="light" selected>Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="auto">Auto (Based on system settings)</option>
+                  <label class="form-label" for="langSelect" data-i18n="set_language">Select Language:</label>
+                  <select class="form-select" id="langSelect">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="ar">🇲🇦 العربية</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="ja">🇯🇵 日本語</option>
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="fontSizeSelect">Select Font Size:</label>
-                  <select class="form-select" id="fontSizeSelect">
-                    <option value="small">Small</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="large">Large</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="soundSelect">Select Alarm Sound:</label>
-                  <select class="form-select" id="soundSelect">
-                    <option value="./audio/alarm1.mp3" selected>Default Alarm</option>
-                    <option value="./audio/alarm7.mp3">School bell</option>
-                    <option value="./audio/alarm4.mp3">Clock alarm</option>
-                    <option value="./audio/alarm2.mp3">City alert siren loop </option>
-                    <option value="./audio/alarm3.mp3">Police Operation Siren</option>
-                    <option value="./audio/alarm5.mp3">Turkey song</option>
-                    <option value="./audio/alarm6.mp3">air raid siren </option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="volumeSlider">Alarm Volume: <span class="badge bg-primary ms-2" id="volumePercentage">100%</span></label>
-                  <input class="form-range" id="volumeSlider" type="range" min="0" max="1" step="0.1" value="1">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label d-block">Identity Color:</label>
-                  <button class="btn btn-outline-primary w-100" id="colorPickerBtn" type="button" data-bs-toggle="modal" data-bs-target="#identityColorModal"><i class="fas fa-palette me-2"></i> Choose Color Theme</button>
+                  <label class="form-label d-block" data-i18n="set_title">Custom Page Title:</label>
+                  <input class="form-control" id="customPageTitleInput" type="text" placeholder="e.g., Math Exam - Class 1A (Leave empty for hide)">
                 </div>
                 <div class="form-check form-switch mb-3">
                   <input class="form-check-input" type="checkbox" id="fullscreenToggle">
-                  <label class="form-check-label" for="fullscreenToggle">Enable Fullscreen Mode on Start</label>
+                  <label class="form-check-label" for="fullscreenToggle" data-i18n="set_fullscreen">Enable Fullscreen Mode on Start</label>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="identityColorModal" tabindex="-1" aria-labelledby="identityColorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="identityColorModalLabel"><i class="fas fa-palette"></i> Select Identity Color</h5>
-              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#settingsModal" data-bs-toggle="modal"></button>
-            </div>
-            <div class="modal-body">
-              <ul class="nav nav-tabs mb-3" id="colorTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="solid-tab" data-bs-toggle="tab" data-bs-target="#solid-colors" type="button" role="tab" aria-controls="solid-colors" aria-selected="true">Solid Colors</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="gradient-tab" data-bs-toggle="tab" data-bs-target="#gradient-colors" type="button" role="tab" aria-controls="gradient-colors" aria-selected="false">Gradients</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="pattern-tab" data-bs-toggle="tab" data-bs-target="#pattern-colors" type="button" role="tab" aria-controls="pattern-colors" aria-selected="false">Patterns</button>
-                </li>
-              </ul>
-              <div class="tab-content" id="colorTabsContent">
-                <div class="tab-pane fade show active" id="solid-colors" role="tabpanel" aria-labelledby="solid-tab">
-                  <div class="color-grid d-flex flex-wrap gap-2 justify-content-center" id="solidColorGrid">
-                    <!-- Populated by JS-->
-                  </div>
+                <div class="form-check form-switch mb-3">
+                  <input class="form-check-input" type="checkbox" id="fitToScreenToggle" checked>
+                  <label class="form-check-label" for="fitToScreenToggle" data-i18n="set_fit_screen">Fit to screen (prevent overflow)</label>
                 </div>
-                <div class="tab-pane fade" id="gradient-colors" role="tabpanel" aria-labelledby="gradient-tab">
-                  <div class="color-grid d-flex flex-wrap gap-3 justify-content-center" id="gradientColorGrid">
-                    <!-- Populated by JS-->
-                  </div>
+              </div>
+              <div class="tab-pane fade" id="appearance-settings" role="tabpanel" aria-labelledby="appearance-setting-tab">
+                <div class="mb-3">
+                  <label class="form-label" for="themeSelect" data-i18n="set_theme">Select Theme:</label>
+                  <select class="form-select" id="themeSelect">
+                    <option value="light" selected data-i18n="theme_light">Light</option>
+                    <option value="dark" data-i18n="theme_dark">Dark</option>
+                    <option value="auto" data-i18n="theme_auto">Auto (Based on system settings)</option>
+                  </select>
                 </div>
-                <div class="tab-pane fade" id="pattern-colors" role="tabpanel" aria-labelledby="pattern-tab">
-                  <div class="mb-4 px-3">
-                    <label class="form-label fw-bold" for="patternOpacity">Pattern Opacity: <span class="badge bg-secondary ms-2" id="opacityPercentage">10%</span></label>
-                    <input class="form-range" id="patternOpacity" type="range" min="0.05" max="1" step="0.05" value="0.1">
+                <div class="mb-3">
+                  <label class="form-label" for="fontFamilySelect" data-i18n="set_font_family">Select Font Family:</label>
+                  <select class="form-select" id="fontFamilySelect">
+                    <option value="system-ui" selected>Default (System)</option>
+                    <option value="'Cairo', sans-serif">Cairo</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Lato', sans-serif">Lato</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Oswald', sans-serif">Oswald</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="'Nunito', sans-serif">Nunito</option>
+                    <option value="'Ubuntu', sans-serif">Ubuntu</option>
+                    <option value="'Orbitron', sans-serif">Orbitron</option>
+                    <option value="'Kanit', sans-serif">Kanit</option>
+                    <option value="'Digital7', sans-serif">Digital7</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="fontSizeSelect" data-i18n="set_font">Select Font Size:</label>
+                  <select class="form-select" id="fontSizeSelect">
+                    <option value="small" data-i18n="font_sm">Small</option>
+                    <option value="medium" selected data-i18n="font_md">Medium</option>
+                    <option value="large" data-i18n="font_lg">Large</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="titleSizeRange" data-i18n="set_title_size">Select Title Size:</label>
+                  <input class="form-range" id="titleSizeRange" type="range" min="1" max="5" step="1" value="3">
+                  <div class="d-flex justify-content-between px-1"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label d-block" data-i18n="set_identity">Identity Color:</label>
+                  <button class="btn btn-outline-primary w-100" id="colorPickerBtn" type="button" data-bs-toggle="modal" data-bs-target="#identityColorModal"><i class="fas fa-palette me-2"></i> <span data-i18n="btn_choose_color">Choose Color Theme</span></button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="audio-settings" role="tabpanel" aria-labelledby="audio-setting-tab">
+                <div class="mb-3">
+                  <label class="form-label" for="soundSelect" data-i18n="set_sound">Select Alarm Sound:</label>
+                  <div class="input-group mb-2">
+                    <input class="form-control" id="uploadAudioInput" type="file" accept="audio/*">
+                    <label class="input-group-text" for="uploadAudioInput" data-i18n="snd_upload">Upload</label>
                   </div>
-                  <div class="color-grid d-flex flex-wrap gap-3 justify-content-center" id="patternColorGrid">
-                    <!-- Populated by JS-->
-                  </div>
+                  <select class="form-select" id="soundSelect">
+                    <option value="./audio/alarm1.mp3" selected data-i18n="snd_default">Default Alarm</option>
+                    <option value="./audio/alarm7.mp3" data-i18n="snd_bell">School bell</option>
+                    <option value="./audio/alarm4.mp3" data-i18n="snd_clock">Clock alarm</option>
+                    <option value="./audio/alarm2.mp3" data-i18n="snd_siren">City alert siren loop </option>
+                    <option value="./audio/alarm3.mp3" data-i18n="snd_police">Police Operation Siren</option>
+                    <option value="./audio/alarm5.mp3" data-i18n="snd_turkey">Turkey song</option>
+                    <option value="./audio/alarm6.mp3" data-i18n="snd_air">Air raid siren </option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="volumeSlider"><span data-i18n="set_volume">Alarm Volume:</span> <span class="badge bg-primary ms-2" id="volumePercentage">100%</span></label>
+                  <input class="form-range" id="volumeSlider" type="range" min="0" max="1" step="0.1" value="1">
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" type="button" data-bs-target="#settingsModal" data-bs-toggle="modal">Back to Settings</button>
-            </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
+    <div class="modal fade" id="identityColorModal" tabindex="-1" aria-labelledby="identityColorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="identityColorModalLabel"><i class="fas fa-palette"></i> <span data-i18n="color_modal_title">Select Identity Color</span></h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#settingsModal" data-bs-toggle="modal"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs mb-3" id="colorTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="solid-tab" data-bs-toggle="tab" data-bs-target="#solid-colors" type="button" role="tab" aria-controls="solid-colors" aria-selected="true" data-i18n="tab_solid">Solid Colors</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="gradient-tab" data-bs-toggle="tab" data-bs-target="#gradient-colors" type="button" role="tab" aria-controls="gradient-colors" aria-selected="false" data-i18n="tab_grad">Gradients</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pattern-tab" data-bs-toggle="tab" data-bs-target="#pattern-colors" type="button" role="tab" aria-controls="pattern-colors" aria-selected="false" data-i18n="tab_pattern">Patterns</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="colorTabsContent">
+              <div class="tab-pane fade show active" id="solid-colors" role="tabpanel" aria-labelledby="solid-tab">
+                <div class="mb-3 d-flex align-items-center justify-content-center gap-2">
+                  <label class="form-label mb-0" for="customColorPicker" data-i18n="custom_color_btn">Custom Color:</label>
+                  <input class="form-control form-control-color" id="customColorPicker" type="color" value="#0d6efd" title="Choose your color">
+                </div>
+                <div class="color-grid d-flex flex-wrap gap-2 justify-content-center" id="solidColorGrid">
+                  <!-- Populated by JS-->
+                </div>
+              </div>
+              <div class="tab-pane fade" id="gradient-colors" role="tabpanel" aria-labelledby="gradient-tab">
+                <div class="mb-3 p-3 border rounded bg-light">
+                  <label class="form-label fw-bold mb-2"><i class="fas fa-fill-drip"></i> <span data-i18n="custom_grad_title">Advanced Gradient (PPT Style)</span></label>
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <input class="form-control form-control-color" id="gradColor1" type="color" value="#0d6efd" title="Color 1"><span class="text-muted">to</span>
+                    <input class="form-control form-control-color" id="gradColor2" type="color" value="#0dcaf0" title="Color 2">
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <label class="form-label mb-0">Angle:</label>
+                    <input class="form-range" id="gradAngle" type="range" min="0" max="360" value="135" style="width:100px"><span class="badge bg-secondary" id="gradAngleVal">135&deg;</span>
+                    <button class="btn btn-sm btn-primary ms-auto" id="applyCustomGrad">Apply</button>
+                  </div>
+                </div>
+                <div class="color-grid d-flex flex-wrap gap-3 justify-content-center" id="gradientColorGrid">
+                  <!-- Populated by JS-->
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pattern-colors" role="tabpanel" aria-labelledby="pattern-tab">
+                <div class="mb-3 p-3 border rounded bg-light">
+                  <label class="form-label fw-bold mb-2"><i class="fas fa-images"></i> <span data-i18n="custom_pattern_title">Upload Custom Pattern</span></label>
+                  <div class="input-group mb-2">
+                    <input class="form-control" id="uploadPatternBtn" type="file" accept="image/*">
+                    <label class="input-group-text" for="uploadPatternBtn">Upload</label>
+                  </div>
+                </div>
+                <div class="mb-4 px-3">
+                  <label class="form-label fw-bold" for="patternOpacity"><span data-i18n="pattern_opacity">Pattern Opacity:</span> <span class="badge bg-secondary ms-2" id="opacityPercentage">10%</span></label>
+                  <input class="form-range" id="patternOpacity" type="range" min="0.05" max="1" step="0.05" value="0.1">
+                </div>
+                <div class="color-grid d-flex flex-wrap gap-3 justify-content-center" id="patternColorGrid">
+                  <!-- Populated by JS-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-target="#settingsModal" data-bs-toggle="modal" data-i18n="btn_back_settings">Back to Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-danger" id="timeUpModalLabel" data-i18n="modal_times_up">Time's Up!</h5>
+            <button class="btn-close btn-danger" type="button" aria-label="Close" id="closeTimeUpBtnTop"></button>
+          </div>
+          <div class="modal-body"><img class="img-fluid mb-3 w-50 justify-self-center d-block mx-auto time-up-img" src="./imgs/icon.png" alt="Time's Up">
+            <div class="text-center" data-i18n="modal_times_up_msg">The countdown has finished.</div>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+              <button class="btn btn-outline-primary add-time-btn" type="button" data-time="60" data-i18n="add_1m">+1 Min</button>
+              <button class="btn btn-outline-primary add-time-btn" type="button" data-time="120" data-i18n="add_2m">+2 Min</button>
+              <button class="btn btn-outline-primary add-time-btn" type="button" data-time="300" data-i18n="add_5m">+5 Min</button>
+              <button class="btn btn-outline-primary add-time-btn" type="button" data-time="600" data-i18n="add_10m">+10 Min</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger" id="closeTimeUpBtnBottom" type="button" data-i18n="btn_close">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <footer class="timer-footer mt-auto d-flex flex-column flex-sm-row justify-content-between align-items-center p-3 text-white">
-      <div class="copyright-section text-center mb-2 mb-sm-0 fs-6"><span>&copy; </span><span id="current-year"></span><span> All rights reserved.</span></div>
+      <div class="copyright-section text-center mb-2 mb-sm-0 fs-6"><span>&copy; </span><span id="current-year"></span><span data-i18n="footer_rights"> All rights reserved.</span></div>
       <div class="developer-section fs-6 d-flex align-items-center gap-2 justify-content-center">
-        <div class="code-logo fs-4 fw-bold text-warning">&lt;/&gt;</div><span>Developed by <strong class="text-warning">Ahmed Bouramdane</strong></span>
+        <div class="code-logo fs-4 fw-bold text-warning">&lt;/&gt;</div><span data-i18n="footer_dev">Developed by</span><span> <strong class="text-warning">Ahmed Bouramdane</strong></span>
       </div>
     </footer>
     <script src="./js/all.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/i18n.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/settings.js"></script>
     <script>

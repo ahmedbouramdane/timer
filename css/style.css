@@ -13,6 +13,20 @@ body {
   background-color: #f8f9fa !important;
 }
 
+main {
+  border-radius: 15px;
+  margin: 10px auto;
+  padding-bottom: 10px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: inset -1px -1px 4px 4px rgba(0, 0, 0, 0.1);
+  height: max-content;
+}
+
+nav {
+  box-shadow: 0 -1px 0px rgba(0, 0, 0, .3), 0 20px 20px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.04);
+  margin-bottom: 5px;
+}
+
 /* Custom Time Inputs */
 .time-input-group .time-input {
   width: 70px;
@@ -52,14 +66,14 @@ body {
 }
 
 body {
-  background-color: var(--bg-main) !important;
+  background-color: #f8f9fa !important;
   color: var(--text-color);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
 }
 .timer {
-  background-color: var(--bg-timer) !important;
+  background-color: #eeeeee !important;
   border-color: var(--border-color) !important;
   color: var(--text-color);
   transition:
@@ -164,6 +178,37 @@ body.dark-theme .text-muted {
 
   .progress {
     margin-top: 5px;
+  }
+  
+  .time-input {
+    font-size: 1.5rem !important;
+    max-width: 50px !important;
+    font-weight: normal !important;
+  }
+  .time-separator {
+      font-size: 1.5rem !important;
+  }
+  .time-input-group {
+      gap: 2px;
+      flex-wrap: nowrap !important;
+      justify-content: center;
+  }
+  
+  .set-time .btn-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+      gap: 5px;
+  }
+  .set-time .btn-group .btn {
+      flex: 1 1 auto;
+      border-radius: 5px !important;
+  }
+  
+  .modal-dialog {
+      margin-top: 10% !important;
   }
 }
 
@@ -311,12 +356,123 @@ body.dark-theme .timer-footer {
     background: var(--identity-bg, #0d6efd) !important;
 }
 
-/* Make body background responsive to patterns and gradients */
-body {
-    background: var(--identity-bg, #ffffff) !important;
-    background-size: var(--identity-pattern-size, auto) !important;
+/* Ensure body doesn't take crazy gradients on layout, just some subtle hint if wanted, but keep it white by req */
+body.dark-theme {
+    background: #121212 !important; 
+}
+.timer-footer {
+    background: var(--identity-bg, linear-gradient(135deg, #0d6efd, #0b5ed7)) !important;
+}
+body.dark-theme .timer-footer {
+    background: #1e1e1e !important;
+}
+.btn-primary, .btn-primary:hover {
+    color: var(--identity-text, #fff) !important;
 }
 
-.dark-theme body {
-    background: #212529 !important; /* Keep dark theme background solid largely */
+/* RTL Adjustments */
+[dir="rtl"] .me-2 {
+    margin-right: 0 !important;
+    margin-left: 0.5rem !important;
+}
+[dir="rtl"] .ms-2 {
+    margin-left: 0 !important;
+    margin-right: 0.5rem !important;
+}
+[dir="rtl"] .ms-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+[dir="rtl"] .me-auto {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+[dir="rtl"] .rtl-btn-group {
+    flex-direction: row-reverse;
+}
+
+/* Custom Page Title Ticker */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: var(--identity-color, #0d6efd);
+    color: var(--identity-text, #fff);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-move {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 15s linear infinite;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* Custom Page Title Size Classes (Levels 1-5) */
+body.title-size-1 .ticker-move { font-size: 0.8rem; }
+body.title-size-2 .ticker-move { font-size: 1.1rem; }
+body.title-size-3 .ticker-move { font-size: 1.5rem; }
+body.title-size-4 .ticker-move { font-size: 2.2rem; }
+body.title-size-5 .ticker-move { font-size: 3rem; }
+
+@keyframes ticker {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+/* 
+ * Fit To Screen Overrides (Laptop/TV constraints) 
+ * Dynamically shrinks dimensions using vh and vmin to prevent vertical scrolling overflow
+ */
+body.fit-to-screen {
+    overflow-y: hidden;
+}
+body.fit-to-screen main {
+    flex: 1;
+    margin: 10px auto;
+    padding-bottom: 10px;
+    justify-content: space-evenly !important; 
+}
+body.fit-to-screen .timer {
+    padding: 2vh !important;
+}
+body.fit-to-screen .high-school-logo {
+    height: auto !important;
+    max-height: 12vh !important;
+    object-fit: contain;
+}
+body.fit-to-screen .time-show {
+    font-size: min(16vh, 18vw) !important;
+}
+body.fit-to-screen .time-input, 
+body.fit-to-screen .time-separator {
+    font-size: min(4vh, 2.5rem) !important;
+}
+body.fit-to-screen .ticker-wrap {
+    margin-bottom: 1vh;
+}
+body.fit-to-screen.title-size-small .ticker-move { font-size: min(2vh, 0.9rem); }
+body.fit-to-screen.title-size-medium .ticker-move { font-size: min(2.5vh, 1.2rem); }
+body.fit-to-screen.title-size-large .ticker-move { font-size: min(3vh, 1.5rem); }
+body.fit-to-screen .progress {
+    height: 3vh !important;
+}
+body.fit-to-screen .classroom {
+    font-size: min(3vh, 1.5rem) !important;
+    margin-top: 1vh !important;
+}
+body.fit-to-screen .set-time .btn-group .btn {
+    padding: 1vh 2vw;
+    font-size: min(2.5vh, 1.25rem);
 }

@@ -11,7 +11,7 @@ let container = document.getElementById("container"),
 //     const windowHeight = window.innerHeight;
 //     container.style.height = `${windowHeight - nav.offsetHeight -footer.offsetHeight}px`;
 // });
-window.addEventListener('dblclick', () => {
+window.addEventListener('click', () => {
     
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch((err) => {
@@ -97,6 +97,7 @@ let isPaused = false;
 let remainingSeconds = 0;
 let begin = true;
 let allSecondsInTheRound = 0;
+let lastSetTime = { h: 0, m: 0, s: 0 };
 
 function updateTimeDisplay(seconds) {
     const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
@@ -117,6 +118,9 @@ startBtn.addEventListener('click', () => {
     let m = parseInt(inputMinutes.value) || 0;
     let s = parseInt(inputSeconds.value) || 0;
     
+    // Store for reset
+    lastSetTime = { h, m, s };
+    
     if (h === 0 && m === 0 && s === 0) {
         // show bootstrap toast for invalid time format automatically
         let toastEl = document.querySelector('#invalidTimeToast .toast');
@@ -129,7 +133,7 @@ startBtn.addEventListener('click', () => {
     startBtn.disabled = true;
     isPaused = false;
     if (isPaused) {
-        startBtn.innerHTML = 'Start';
+        startBtn.innerHTML = (typeof translations !== 'undefined') ? translations[localStorage.getItem('appLang') || 'en']['btn_start'] : 'Start';
         totalSeconds = remainingSeconds;
         allSecondsInTheRound = remainingSeconds;
     } else {
@@ -153,14 +157,14 @@ pauseBtn.addEventListener('click', () => {
     clearInterval(interval);
     isPaused = true;
     remainingSeconds = totalSeconds;
-    startBtn.innerHTML = 'Resume';
+    startBtn.innerHTML = (typeof translations !== 'undefined') ? translations[localStorage.getItem('appLang') || 'en']['btn_resume'] : 'Resume';
     startBtn.disabled = false;
     resetBtn.disabled = false;
     pauseBtn.disabled = true;
 });
 resetBtn.addEventListener('click', () => {
     begin = true;
-    startBtn.innerHTML = 'Start';
+    startBtn.innerHTML = (typeof translations !== 'undefined') ? translations[localStorage.getItem('appLang') || 'en']['btn_start'] : 'Start';
     clearInterval(interval);
     isPaused = false;
     totalSeconds = 0;
@@ -168,10 +172,12 @@ resetBtn.addEventListener('click', () => {
     remainingSeconds = 0;
     updateTimeDisplay(totalSeconds);
     
-    // Reset inputs
-    inputHours.value = '00';
-    inputMinutes.value = '00';
-    inputSeconds.value = '00';
+    // Reset inputs to last set time
+    inputHours.value = String(lastSetTime.h).padStart(2, '0');
+    inputMinutes.value = String(lastSetTime.m).padStart(2, '0');
+    inputSeconds.value = String(lastSetTime.s).padStart(2, '0');
+    
+    updateTime(); // Sync display and internal state
     
     startBtn.disabled = false;
     pauseBtn.disabled = true;
@@ -205,38 +211,98 @@ function updateTime() {
 });
 
 // show the bs model that in the timer pug file automatically when the time is up and play sound
+let timeUpModalInstance = null;
 function showModal() {
-    const myModal = new bootstrap.Modal(document.getElementById('timeUpModal'), {});
-    myModal.show();
+    if(!timeUpModalInstance) {
+        timeUpModalInstance = new bootstrap.Modal(document.getElementById('timeUpModal'), {
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+    timeUpModalInstance.show();
     // set alarm sound source from local storage or default sound
     let alarmAudio = document.getElementById('alarm-audio');
     let selectedSound = localStorage.getItem('selectedSound') || './audio/alarm1.mp3';
-    alarmAudio.src = `${selectedSound}`;
-    document.getElementById('alarm-audio').play();
-
+    
+    // Check if it's custom audio
+    if (selectedSound === 'custom_audio') {
+        const customAudioData = localStorage.getItem('customAudioData');
+        if (customAudioData) {
+            alarmAudio.src = customAudioData;
+        } else {
+            alarmAudio.src = './audio/alarm1.mp3'; // Fallback if data is missing
+        }
+    } else {
+        alarmAudio.src = `${selectedSound}`;
+    }
+    
+    alarmAudio.play().catch(e => console.log("Audio play prevented:", e));
 }
-// Handle modal close event globally, works for backdrop clicks and buttons
-document.getElementById('timeUpModal').addEventListener('hidden.bs.modal', () => {
+
+function handleBaseReset() {
     document.getElementById('alarm-audio').pause();
     document.getElementById('alarm-audio').currentTime = 0;
     begin = true;
-    startBtn.innerHTML = 'Start';
+    startBtn.innerHTML = (typeof translations !== 'undefined') ? translations[localStorage.getItem('appLang') || 'en']['btn_start'] : 'Start';
     clearInterval(interval);
     isPaused = false;
     totalSeconds = 0;
     remainingSeconds = 0;
     updateTimeDisplay(totalSeconds);
     
-    // Reset inputs
-    inputHours.value = '00';
-    inputMinutes.value = '00';
-    inputSeconds.value = '00';
+    // Reset inputs to last set time
+    inputHours.value = String(lastSetTime.h).padStart(2, '0');
+    inputMinutes.value = String(lastSetTime.m).padStart(2, '0');
+    inputSeconds.value = String(lastSetTime.s).padStart(2, '0');
 
     startBtn.disabled = false;
     pauseBtn.disabled = true;
     resetBtn.disabled = true;
 
     updateTime();
+}
+
+// Handle modal close event globally, works for backdrop clicks and buttons
+document.getElementById('closeTimeUpBtnTop').addEventListener('click', () => {
+    handleBaseReset();
+    timeUpModalInstance.hide();
+});
+document.getElementById('closeTimeUpBtnBottom').addEventListener('click', () => {
+    handleBaseReset();
+    timeUpModalInstance.hide();
+});
+
+// Add extra time buttons listener
+document.querySelectorAll('.add-time-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const addedSeconds = parseInt(e.target.getAttribute('data-time'));
+        
+        // Stop alarm & hide modal
+        document.getElementById('alarm-audio').pause();
+        document.getElementById('alarm-audio').currentTime = 0;
+        timeUpModalInstance.hide();
+        
+        // Setup new time
+        totalSeconds = addedSeconds;
+        allSecondsInTheRound = totalSeconds;
+        updateTimeDisplay(totalSeconds);
+        
+        // Start countdown
+        begin = false;
+        pauseBtn.disabled = false;
+        startBtn.disabled = true;
+        isPaused = false;
+        
+        clearInterval(interval);
+        interval = setInterval(() => {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                updateTimeDisplay(totalSeconds);
+            } else {
+                clearInterval(interval);
+            }
+        }, 1000);
+    });
 });
 
 setInterval(() => {
@@ -317,6 +383,12 @@ window.addEventListener('load', () => {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+    // Initialize Tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
 });
 
 // Typing Animation
