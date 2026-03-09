@@ -303,8 +303,15 @@ function initColorGrids() {
     const tickerWrap = document.querySelector('.ticker-wrap');
     const customPageTitle = document.getElementById('customPageTitle');
     
+    const defaultTickerMsg = "You can change this title from the settings. write your class N as ex: 1 BAC SM 2";
+
     function applyCustomTitle(val) {
-        if (!val || val.trim() === '' || val.toLowerCase() === 'none') {
+        if (!val || val.trim() === '') {
+            // If empty, show the default English instruction
+            if(tickerWrap) tickerWrap.style.display = 'block';
+            if(customPageTitle) customPageTitle.textContent = defaultTickerMsg;
+        } else if (val.toLowerCase() === 'none') {
+            // Special keyword 'none' to hide it
             if(tickerWrap) tickerWrap.style.display = 'none';
         } else {
             if(tickerWrap) tickerWrap.style.display = 'block';
@@ -313,7 +320,13 @@ function initColorGrids() {
     }
 
     if (customPageTitleInput) {
-        const savedTitle = localStorage.getItem('customPageTitle') || '';
+        let savedTitle = localStorage.getItem('customPageTitle');
+        // If it's the first time or empty, initialize with default so user sees it in input
+        if (savedTitle === null || savedTitle.trim() === '') {
+            savedTitle = defaultTickerMsg;
+            localStorage.setItem('customPageTitle', savedTitle);
+        }
+        
         customPageTitleInput.value = savedTitle;
         applyCustomTitle(savedTitle);
         
