@@ -63,6 +63,10 @@ nav {
   --bg-timer: #ffffff;
   --text-color: #212529;
   --border-color: #dee2e6;
+  --identity-pattern-fg: #0d6efd;
+  --identity-pattern-bg: transparent;
+  --identity-pattern-scale: 20px;
+  --title-bg-opacity: 1;
 }
 
 body {
@@ -404,6 +408,7 @@ body.dark-theme .timer-footer {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    background-color: rgba(var(--identity-color-rgb), var(--title-bg-opacity, 1)) !important;
 }
 
 .ticker-move {

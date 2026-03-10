@@ -206,6 +206,10 @@
                   <div class="d-flex justify-content-between px-1"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
                 </div>
                 <div class="mb-3">
+                  <label class="form-label" for="titleBgOpacity" data-i18n="title_opacity">Title BG Opacity:</label>
+                  <input class="form-range" id="titleBgOpacity" type="range" min="0" max="1" step="0.05" value="1">
+                </div>
+                <div class="mb-3">
                   <label class="form-label d-block" data-i18n="set_identity">Identity Color:</label>
                   <button class="btn btn-outline-primary w-100" id="colorPickerBtn" type="button" data-bs-toggle="modal" data-bs-target="#identityColorModal"><i class="fas fa-palette me-2"></i> <span data-i18n="btn_choose_color">Choose Color Theme</span></button>
                 </div>
@@ -291,9 +295,26 @@
                     <label class="input-group-text" for="uploadPatternBtn">Upload</label>
                   </div>
                 </div>
-                <div class="mb-4 px-3">
-                  <label class="form-label fw-bold" for="patternOpacity"><span data-i18n="pattern_opacity">Pattern Opacity:</span> <span class="badge bg-secondary ms-2" id="opacityPercentage">10%</span></label>
-                  <input class="form-range" id="patternOpacity" type="range" min="0.05" max="1" step="0.05" value="0.1">
+                <div class="mb-3 p-3 border rounded bg-light">
+                  <label class="form-label fw-bold mb-2"><i class="fas fa-sliders-h"></i> Advanced Pattern Settings</label>
+                  <div class="row g-2 mb-2">
+                    <div class="col-6">
+                      <label class="form-label small" for="patternFgColor" data-i18n="pattern_foreground">Foreground:</label>
+                      <input class="form-control form-control-color w-100" id="patternFgColor" type="color" value="#000000" title="Pattern Foreground">
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small" for="patternBgColor" data-i18n="pattern_background">Background:</label>
+                      <input class="form-control form-control-color w-100" id="patternBgColor" type="color" value="#ffffff" title="Pattern Background">
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label small" for="patternScale" data-i18n="pattern_scale">Pattern Scale:</label>
+                    <input class="form-range" id="patternScale" type="range" min="10" max="300" step="5" value="50">
+                  </div>
+                  <div class="mb-0">
+                    <label class="form-label small fw-bold" for="patternOpacity"><span data-i18n="pattern_opacity">Pattern Opacity:</span> <span class="badge bg-secondary ms-2" id="opacityPercentage">10%</span></label>
+                    <input class="form-range" id="patternOpacity" type="range" min="0.05" max="1" step="0.05" value="0.1">
+                  </div>
                 </div>
                 <div class="color-grid d-flex flex-wrap gap-3 justify-content-center" id="patternColorGrid">
                   <!-- Populated by JS-->

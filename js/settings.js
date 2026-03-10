@@ -157,11 +157,26 @@ const gradientColors = [
     "linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%)"
 ];
 const patternColors = [
-    "radial-gradient(circle, var(--identity-pattern-color) 10%, transparent 10%)",
-    "linear-gradient(45deg, var(--identity-pattern-color) 25%, transparent 25%, transparent 75%, var(--identity-pattern-color) 75%, var(--identity-pattern-color))",
-    "repeating-linear-gradient(45deg, var(--identity-pattern-color), var(--identity-pattern-color) 2px, transparent 2px, transparent 6px)",
-    "repeating-radial-gradient(var(--identity-pattern-color), var(--identity-pattern-color) 3px, transparent 3px, transparent 15px)"
+    "radial-gradient(circle, var(--identity-pattern-fg) 10%, var(--identity-pattern-bg) 10%)",
+    "linear-gradient(45deg, var(--identity-pattern-fg) 25%, var(--identity-pattern-bg) 25%, var(--identity-pattern-bg) 75%, var(--identity-pattern-fg) 75%, var(--identity-pattern-fg))",
+    "repeating-linear-gradient(45deg, var(--identity-pattern-fg), var(--identity-pattern-fg) 2px, var(--identity-pattern-bg) 2px, var(--identity-pattern-bg) 6px)",
+    "repeating-radial-gradient(var(--identity-pattern-fg), var(--identity-pattern-fg) 3px, var(--identity-pattern-bg) 3px, var(--identity-pattern-bg) 15px)"
 ];
+
+function hexToRgb(hex) {
+    let r = 0, g = 0, b = 0;
+    hex = hex.replace('#', '');
+    if (hex.length === 3) {
+        r = parseInt(hex[0] + hex[0], 16);
+        g = parseInt(hex[1] + hex[1], 16);
+        b = parseInt(hex[2] + hex[2], 16);
+    } else if (hex.length === 6) {
+        r = parseInt(hex.substring(0, 2), 16);
+        g = parseInt(hex.substring(2, 4), 16);
+        b = parseInt(hex.substring(4, 6), 16);
+    }
+    return `${r}, ${g}, ${b}`;
+}
 
 function getContrastYIQ(hexcolor){
     hexcolor = hexcolor.replace("#", "");
@@ -179,16 +194,24 @@ function applyIdentityColor(bgValue, colorValue = bgValue, patternOpacity = 1) {
     document.documentElement.style.setProperty('--identity-bg', bgValue);
     document.documentElement.style.setProperty('--identity-color', colorValue === bgValue ? bgValue : colorValue);
     
-    // Evaluate contrast for text on primary elements if it's a solid / first matched color
+    // Evaluate contrast for text
     let extractedHexMatch = colorValue.match(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/);
     let extractedHex = extractedHexMatch ? extractedHexMatch[0] : "#0d6efd";
     document.documentElement.style.setProperty('--identity-text', getContrastYIQ(extractedHex));
+    document.documentElement.style.setProperty('--identity-color-rgb', hexToRgb(extractedHex));
     
     // Pattern specific logic
-    if (bgValue.includes('var(--identity-pattern-color)')) {
-        document.documentElement.style.setProperty('--identity-pattern-color', `rgba(13, 110, 253, ${patternOpacity})`);
-        document.documentElement.style.setProperty('--identity-bg', bgValue);
-        document.documentElement.style.backgroundSize = '20px 20px';
+    if (bgValue.includes('var(--identity-pattern-fg)')) {
+        const fgColor = localStorage.getItem('patternFgColor') || '#0d6efd';
+        const bgColor = localStorage.getItem('patternBgColor') || 'transparent';
+        const scale = localStorage.getItem('patternScale') || '20px';
+        
+        // Convert FG to RGBA with opacity
+        const fgRgb = hexToRgb(fgColor);
+        document.documentElement.style.setProperty('--identity-pattern-fg', `rgba(${fgRgb}, ${patternOpacity})`);
+        document.documentElement.style.setProperty('--identity-pattern-bg', bgColor);
+        document.documentElement.style.setProperty('--identity-pattern-scale', scale.includes('px') ? scale : scale + 'px');
+        document.documentElement.style.backgroundSize = 'var(--identity-pattern-scale) var(--identity-pattern-scale)';
     } else {
         document.documentElement.style.backgroundSize = 'auto'; // Reset
     }
@@ -225,7 +248,8 @@ function initColorGrids() {
         patternColors.forEach(pat => {
             const btn = document.createElement('button');
             btn.className = 'color-btn pattern-btn';
-            btn.style.setProperty('--identity-pattern-color', 'rgba(13, 110, 253, 0.8)');
+            btn.style.setProperty('--identity-pattern-fg', 'rgba(13, 110, 253, 0.8)');
+            btn.style.setProperty('--identity-pattern-bg', 'transparent');
             btn.style.background = pat;
             btn.style.backgroundSize = '10px 10px';
             btn.style.border = '1px solid #dee2e6';
@@ -241,7 +265,7 @@ function initColorGrids() {
             const val = e.target.value;
             opacityPercentage.textContent = `${Math.round(val * 100)}%`;
             const savedBg = localStorage.getItem('identityBg');
-            if(savedBg && savedBg.includes('var(--identity-pattern-color)')) {
+            if(savedBg && savedBg.includes('var(--identity-pattern-fg)')) {
                 selectColor(null, savedBg, localStorage.getItem('identityColor'), val);
             }
         });
@@ -298,6 +322,54 @@ function initColorGrids() {
         });
     }
     
+    // High-level controls for Pattern
+    const patternFgColor = document.getElementById('patternFgColor');
+    const patternBgColor = document.getElementById('patternBgColor');
+    const patternScale = document.getElementById('patternScale');
+    const titleBgOpacity = document.getElementById('titleBgOpacity');
+
+    if (patternFgColor) {
+        patternFgColor.value = localStorage.getItem('patternFgColor') || '#0d6efd';
+        patternFgColor.addEventListener('input', (e) => {
+            localStorage.setItem('patternFgColor', e.target.value);
+            const savedBg = localStorage.getItem('identityBg');
+            if(savedBg && savedBg.includes('var(--identity-pattern-fg)')) {
+                applyIdentityColor(savedBg, localStorage.getItem('identityColor'), document.getElementById('patternOpacity').value);
+            }
+        });
+    }
+    if (patternBgColor) {
+        patternBgColor.value = localStorage.getItem('patternBgColor') || 'transparent'; 
+        patternBgColor.addEventListener('input', (e) => {
+            localStorage.setItem('patternBgColor', e.target.value);
+            const savedBg = localStorage.getItem('identityBg');
+            if(savedBg && savedBg.includes('var(--identity-pattern-fg)')) {
+                applyIdentityColor(savedBg, localStorage.getItem('identityColor'), document.getElementById('patternOpacity').value);
+            }
+        });
+    }
+    if (patternScale) {
+        patternScale.value = parseInt(localStorage.getItem('patternScale')) || 20;
+        patternScale.addEventListener('input', (e) => {
+            const val = e.target.value + 'px';
+            localStorage.setItem('patternScale', val);
+            const savedBg = localStorage.getItem('identityBg');
+            if(savedBg && savedBg.includes('var(--identity-pattern-fg)')) {
+                applyIdentityColor(savedBg, localStorage.getItem('identityColor'), document.getElementById('patternOpacity').value);
+            }
+        });
+    }
+    if (titleBgOpacity) {
+        const savedOpacity = localStorage.getItem('titleBgOpacity') || '1';
+        titleBgOpacity.value = savedOpacity;
+        document.documentElement.style.setProperty('--title-bg-opacity', savedOpacity);
+        titleBgOpacity.addEventListener('input', (e) => {
+            const val = e.target.value;
+            document.documentElement.style.setProperty('--title-bg-opacity', val);
+            localStorage.setItem('titleBgOpacity', val);
+        });
+    }
+
     // --- NEW LOGIC: Custom Page Title Ticker ---
     const customPageTitleInput = document.getElementById('customPageTitleInput');
     const tickerWrap = document.querySelector('.ticker-wrap');

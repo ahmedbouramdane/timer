@@ -81,7 +81,11 @@ const translations = {
         "toast_invalid_msg": "Please enter a valid time greater than 00:00:00.",
         "tooltip_hr": "Hours",
         "tooltip_min": "Minutes",
-        "tooltip_sec": "Seconds"
+        "tooltip_sec": "Seconds",
+        "pattern_foreground": "Pattern Color:",
+        "pattern_background": "Pattern Background:",
+        "pattern_scale": "Pattern Scale (Zoom):",
+        "title_opacity": "Title BG Opacity:"
     },
     fr: {
         "app_title": "Minuteur Scolaire",
@@ -165,7 +169,11 @@ const translations = {
         "toast_invalid_msg": "Veuillez entrer une durée valide (supérieure à zéro).",
         "tooltip_hr": "Heures",
         "tooltip_min": "Minutes",
-        "tooltip_sec": "Secondes"
+        "tooltip_sec": "Secondes",
+        "pattern_foreground": "Couleur du motif:",
+        "pattern_background": "Arrière-plan du motif:",
+        "pattern_scale": "Échelle du motif (Zoom):",
+        "title_opacity": "Opacité du fond du titre:"
     },
     ar: {
         "app_title": "المؤقت المدرسي",
@@ -249,7 +257,11 @@ const translations = {
         "toast_invalid_msg": "يرجى إدخال وقت صالح أكبر من 00:00:00.",
         "tooltip_hr": "ساعات",
         "tooltip_min": "دقائق",
-        "tooltip_sec": "ثواني"
+        "tooltip_sec": "ثواني",
+        "pattern_foreground": "لون النمط:",
+        "pattern_background": "خلفية النمط:",
+        "pattern_scale": "حجم النمط (زوم):",
+        "title_opacity": "شفافية خلفية العنوان:"
     },
     es: {
         "app_title": "Temporizador Escolar",
@@ -326,7 +338,11 @@ const translations = {
         "toast_invalid_msg": "Por favor introduzca un tiempo válido (mayor a cero).",
         "tooltip_hr": "Horas",
         "tooltip_min": "Minutos",
-        "tooltip_sec": "Segundos"
+        "tooltip_sec": "Segundos",
+        "pattern_foreground": "Color del patrón:",
+        "pattern_background": "Fondo del patrón:",
+        "pattern_scale": "Escala del patrón (Zoom):",
+        "title_opacity": "Opacidad del fondo del título:"
     },
     ja: {
         "app_title": "学校タイマー",
@@ -403,7 +419,11 @@ const translations = {
         "toast_invalid_msg": "有効な時間を入力してください。",
         "tooltip_hr": "時間",
         "tooltip_min": "分",
-        "tooltip_sec": "秒"
+        "tooltip_sec": "秒",
+        "pattern_foreground": "パターンの色:",
+        "pattern_background": "パターンの背景色:",
+        "pattern_scale": "パターンの大きさ (ズーム):",
+        "title_opacity": "タイトルの背景の不透明度:"
     },
     zgh: {
         "app_title": "ⴰⵎⵙⵉⴹⵏ ⵏ ⵓⵖⵔⴱⴰⵣ",
@@ -459,6 +479,10 @@ const translations = {
         "tooltip_hr": "ⵜⵉⵙⵔⴰⴳⵉⵏ",
         "tooltip_min": "ⵜⵓⵙⴷⵉⴷⵉⵏ",
         "tooltip_sec": "ⵜⵉⵙⵉⵏⴰ",
+        "pattern_foreground": "ⵉⴽⴽⵍⵓ ⵏ ⵓⵎⵓⵛⵛⵓ:",
+        "pattern_background": "ⴰⴷⴼⵍ ⵏ ⵓⵎⵓⵛⵛⵓ:",
+        "pattern_scale": "ⵜⵉⴷⴷⵉ ⵏ ⵓⵎⵓⵛⵛⵓ (Zoom):",
+        "title_opacity": "ⵜⴰⴼⴰⵡⵜ ⵏ ⵡⴰⴷⴼⵓⵍ ⵏ ⵓⵣⵡⴻⵍ:",
         "default_ticker_title": "ⵜⵣⴹⴰⵔⴷ ⴰⴷ ⵜⵙⵏⴼⵍⴷ ⴰⵣⵡⴻⵍ ⴰⴷ ⴳ ⵓⵏⴽⵉⴷⵏ. ⴰⵔⴰ ⴰⵙⴽⵯⴼⵍ ⵏⵏⴽ ⵣⵓⵏ ⴷ: 1 BAC SM 2"
     }
 };

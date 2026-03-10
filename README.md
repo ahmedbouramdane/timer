@@ -53,5 +53,18 @@ https://ahmedbouramdane.github.io/timer/
 
 ## News
 
-- v6(Thu 25/09/2025): Settings updates, theme, add other alarm song
-- new version 2026.2 (25/02/2026): add colors palette, patterns, gradients, and more settings, add service worker for offline support and install on mobile, add new alarm songs, add new features and correct responsive issues
+1. ### v6(Thu 25/09/2025):
+   - Settings updates, theme, add other alarm song
+2. ### new version 2026.2 (25/02/2026):
+   - add colors palette, patterns, gradients, and more settings
+   - add service worker for offline support and install on mobile
+   - add new alarm songs
+   - add new features and correct responsive issues
+3. ### v2026.3 (09/03/2026):
+   - add title size control, identity color control, and more settings
+   - Add Language change feature
+   - Add Title size control
+   - Add Identity color control
+   - Add more settings
+   - Add more features
+   - Correct responsive issues
